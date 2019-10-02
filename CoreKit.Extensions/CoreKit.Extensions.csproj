@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>David Tabatadze</Authors>
+    <Company />
+    <Description>.Net Core extensions for reference and/or non reference types.</Description>
+    <PackageReleaseNotes>Extensions for String.
+Extensions for IEnumerable.</PackageReleaseNotes>
+    <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
+    <RepositoryType>C#</RepositoryType>
+    <PackageTags>.net core tool kit extension extensions david tabatadze</PackageTags>
+    <NeutralLanguage>ka-GE</NeutralLanguage>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>David Tabatadze</Authors>
+    <Description>.Net Core cache manager based on MemoryCache</Description>
+    <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
+    <RepositoryType>C#</RepositoryType>
+    <PackageTags>.net core tool kit cache caching david tabatadze</PackageTags>
+    <NeutralLanguage>ka-GE</NeutralLanguage>
+    <PackageReleaseNotes>Cache set.
+Cache get.
+Cache remove/clear.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.6.0" />
+  </ItemGroup>
+
+</Project>
