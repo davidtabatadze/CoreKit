@@ -16,10 +16,11 @@ namespace CoreKit.Connectivity
     {
 
         /// <summary>
-        /// Dispose
+        /// Ending class lifecycle
         /// </summary>
         public virtual void Dispose()
         {
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

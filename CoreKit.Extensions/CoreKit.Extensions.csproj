@@ -12,8 +12,10 @@ Extensions for IEnumerable.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
-    <PackageTags>.net core tool kit extension extensions david tabatadze</PackageTags>
+    <PackageTags>.net core tool kit extension extensions david tabatadze optio optioai optio.ai</PackageTags>
     <NeutralLanguage>ka-GE</NeutralLanguage>
+    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
