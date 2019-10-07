@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
     <Authors>David Tabatadze</Authors>
-    <Description>.Net Core cache manager based on MemoryCache</Description>
+    <Description>.net standard cache manager based on MemoryCache</Description>
     <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
-    <PackageTags>.net core tool kit cache caching david tabatadze optio optioai optio.ai</PackageTags>
-    <NeutralLanguage>ka-GE</NeutralLanguage>
+    <PackageTags>.net standard netstandard tool kit toolkit cache caching david tabatadze optio optioai optio.ai</PackageTags>
     <PackageReleaseNotes>Cache set.
 Cache get.
-Cache remove/clear.</PackageReleaseNotes>
-    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.0.1</Version>
+Cache remove/clean.</PackageReleaseNotes>
+    <NeutralLanguage>ka-GE</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,21 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
     <Authors>David Tabatadze</Authors>
-    <Company />
-    <Description>.Net Core extensions for reference and/or non reference types.</Description>
-    <PackageReleaseNotes>Extensions for String.
-Extensions for IEnumerable.</PackageReleaseNotes>
+    <Description>.net standard extensions for reference and/or non reference types.</Description>
     <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
-    <PackageTags>.net core tool kit extension extensions david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageTags>.net standard netstandard tool kit toolkit extension extensions david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageReleaseNotes>Extensions for IEnumerable.
+Extensions for Object.
+Extensions for String.</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
-    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
 
 </Project>
