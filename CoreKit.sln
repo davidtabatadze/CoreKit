@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreKit.Test", "CoreKit.Test\CoreKit.Test.csproj", "{EE546900-F6CC-491D-8D37-0545D9F4943B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreKit.Extensions", "CoreKit.Extensions\CoreKit.Extensions.csproj", "{6F98170C-F298-4C65-B449-56361BBC9809}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreKit.Extensions", "CoreKit.Extensions\CoreKit.Extensions.csproj", "{6F98170C-F298-4C65-B449-56361BBC9809}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreKit.Caching", "CoreKit.Caching\CoreKit.Caching.csproj", "{0AF08754-F84F-448A-B72F-50E93E55EC20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreKit.Caching", "CoreKit.Caching\CoreKit.Caching.csproj", "{0AF08754-F84F-448A-B72F-50E93E55EC20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreKit.Connectivity", "CoreKit.Connectivity\CoreKit.Connectivity.csproj", "{4381748D-2199-4D10-823D-BF7D6073DCE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreKit.Connectivity", "CoreKit.Connectivity\CoreKit.Connectivity.csproj", "{4381748D-2199-4D10-823D-BF7D6073DCE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreKit.Connectivity.SMTP", "CoreKit.Connectivity.SMTP\CoreKit.Connectivity.SMTP.csproj", "{F17742A3-A78A-44D9-A7C5-FACB4B08FFF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4381748D-2199-4D10-823D-BF7D6073DCE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4381748D-2199-4D10-823D-BF7D6073DCE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4381748D-2199-4D10-823D-BF7D6073DCE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F17742A3-A78A-44D9-A7C5-FACB4B08FFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F17742A3-A78A-44D9-A7C5-FACB4B08FFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F17742A3-A78A-44D9-A7C5-FACB4B08FFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F17742A3-A78A-44D9-A7C5-FACB4B08FFF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

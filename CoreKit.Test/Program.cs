@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using CoreKit.Caching;
 using CoreKit.Extensions.Class;
 using CoreKit.Extensions.String;
 using CoreKit.Extensions.Collection;
-using CoreKit.Caching;
+using CoreKit.Connectivity.SMTP;
+using System.Net.Mail;
+using System.Net;
 
 namespace CoreKit.Test
 {
@@ -43,6 +46,14 @@ namespace CoreKit.Test
             val = cache.Get<string>("key");
             cache.Remove("key");
             val = cache.Get<string>("key");
+
+            // smtp
+            // use Allow less secure apps: ON
+            // https://stackoverflow.com/questions/20906077/gmail-error-the-smtp-server-requires-a-secure-connection-or-the-client-was-not#26709761
+            using (var smtp = new SMTPKit(new SMTPKitConfiguration { EnableSSL = true, Server = "smtp.gmail.com", Port = 587, User = "tabatadzedat@gmail.com", Password = "xxx" }))
+            {
+                smtp.SendAsync("tabatadzedat@gmail.com", "ola", "bola").Wait();
+            }
 
             Console.WriteLine("all CoreKit tests done...");
             Console.ReadKey();
