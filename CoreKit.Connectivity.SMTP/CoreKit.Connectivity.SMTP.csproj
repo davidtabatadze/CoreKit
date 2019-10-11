@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>David Tabatadze</Authors>
+    <Description>.net standard smtp mail manager based on SmtpClient</Description>
+    <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
+    <RepositoryType>C#</RepositoryType>
+    <PackageTags>.net standard netstandard tool kit toolkit smtp smtpclient mail david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageReleaseNotes>SMTP mail send.
+SMTP mail async send.</PackageReleaseNotes>
+    <NeutralLanguage>ka-GE</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
