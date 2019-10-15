@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CoreKit.Extensions.Class
+namespace CoreKit.Extension.Class
 {
 
     /// <summary>

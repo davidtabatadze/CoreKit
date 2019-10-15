@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace CoreKit.Extensions.String
+namespace CoreKit.Extension.String
 {
 
     /// <summary>

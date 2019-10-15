@@ -8,7 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CoreKit.Caching\CoreKit.Caching.csproj" />
     <ProjectReference Include="..\CoreKit.Connectivity.SMTP\CoreKit.Connectivity.SMTP.csproj" />
-    <ProjectReference Include="..\CoreKit.Extensions\CoreKit.Extensions.csproj" />
+    <ProjectReference Include="..\CoreKit.Extension\CoreKit.Extension.csproj" />
   </ItemGroup>
 
 </Project>

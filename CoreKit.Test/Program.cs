@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CoreKit.Caching;
-using CoreKit.Extensions.Class;
-using CoreKit.Extensions.String;
-using CoreKit.Extensions.Collection;
+using CoreKit.Extension.Class;
+using CoreKit.Extension.String;
+using CoreKit.Extension.Collection;
 using CoreKit.Connectivity.SMTP;
 using System.Net.Mail;
 using System.Net;

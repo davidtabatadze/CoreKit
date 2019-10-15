@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace CoreKit.Extensions.Collection
+namespace CoreKit.Extension.Collection
 {
 
     /// <summary>
