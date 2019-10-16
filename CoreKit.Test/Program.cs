@@ -7,6 +7,7 @@ using CoreKit.Extension.Collection;
 using CoreKit.Connectivity.SMTP;
 using System.Net.Mail;
 using System.Net;
+using CoreKit.Cryptography.PBKDF2;
 
 namespace CoreKit.Test
 {
@@ -46,6 +47,23 @@ namespace CoreKit.Test
             val = cache.Get<string>("key");
             cache.Remove("key");
             val = cache.Get<string>("key");
+
+            // cryptography
+            using (var pbkdf2 = new PBKDF2Kit())
+            {
+                var pass1 = "datiko";
+                var salt1 = pbkdf2.Salt;
+                var hash1 = pbkdf2.GenerateHash(pass1, salt1);
+
+                var pass2 = "datka";
+                var salt2 = pbkdf2.Salt;
+                var hash2 = pbkdf2.GenerateHash(pass2, salt2);
+
+                var compare1 = pbkdf2.Compare(pbkdf2.GenerateHash(pass1, salt1), hash1);
+                var compare2 = pbkdf2.Compare(pbkdf2.GenerateHash(pass2, salt2), hash2);
+                var compare3 = pbkdf2.Compare(pbkdf2.GenerateHash("aaa", salt1), hash1);
+                var compare4 = pbkdf2.Compare(pbkdf2.GenerateHash("bbb", salt2), hash2);
+            }
 
             // smtp
             // use Allow less secure apps: ON

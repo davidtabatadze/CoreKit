@@ -20,12 +20,12 @@ namespace CoreKit.Connectivity.SMTP
         public int Port { get; set; }
 
         /// <summary>
-        /// user
+        /// User
         /// </summary>
         public string User { get; set; }
 
         /// <summary>
-        /// password
+        /// Password
         /// </summary>
         public string Password { get; set; }
 

@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>David Tabatadze</Authors>
+    <Company>David Tabatadze</Company>
+    <Description>.net standard PBKDF2 manager</Description>
+    <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
+    <RepositoryType>C#</RepositoryType>
+    <PackageTags>.net standard netstandard tool kit toolkit cryptography pbkdf2 david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageReleaseNotes>Generate salt.
+Generate hash.
+Compare hashes</PackageReleaseNotes>
+    <NeutralLanguage>ka-GE</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>
