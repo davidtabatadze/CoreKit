@@ -7,9 +7,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoreKit.Caching\CoreKit.Caching.csproj" />
+    <ProjectReference Include="..\CoreKit.Connectivity.HTTP\CoreKit.Connectivity.HTTP.csproj" />
     <ProjectReference Include="..\CoreKit.Connectivity.SMTP\CoreKit.Connectivity.SMTP.csproj" />
     <ProjectReference Include="..\CoreKit.Cryptography.PBKDF2\CoreKit.Cryptography.PBKDF2.csproj" />
     <ProjectReference Include="..\CoreKit.Extension\CoreKit.Extension.csproj" />
+    <ProjectReference Include="..\CoreKit.Sync\CoreKit.Sync.csproj" />
   </ItemGroup>
 
 </Project>

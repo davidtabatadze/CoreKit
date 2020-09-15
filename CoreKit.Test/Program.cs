@@ -5,26 +5,52 @@ using CoreKit.Extension.Class;
 using CoreKit.Extension.String;
 using CoreKit.Extension.Collection;
 using CoreKit.Connectivity.SMTP;
+using CoreKit.Connectivity.HTTP;
+using CoreKit.Sync;
 using System.Net.Mail;
 using System.Net;
 using CoreKit.Cryptography.PBKDF2;
+using System.Threading.Tasks;
 
 namespace CoreKit.Test
 {
     class Program
     {
+
+        class Test
+        {
+            public string Prop { get; set; }
+
+            public async Task DoSome()
+            {
+                Console.WriteLine("doing some..");
+            }
+            public async Task<string> GiveSome(int x)
+            {
+                Console.WriteLine("giving some..");
+                return (x / 123).ToString();
+            }
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("CoreKit test...");
 
             // extensions
-            var str = "a     b  c         ";
+            var str = "j  a     b  C         ";
+            string str1 = null;
             var strIsEmpty = str.IsEmpty();
             var strHasValue = str.HasValue();
             var strTrimFull = str.TrimFull();
+            var strTrimFullL = str1.TrimFullAndLower();
+            var strTrimFullU = str.TrimFullAndUpper();
+            var strTrim = str.Trim();
+            var strTrimChar = str.Trim('j');
             var col = new List<string> { };
             var colIsEmpty = col.IsEmpty();
             var colHasValue = col.HasValue();
+            var pascal = str.ToPascal();
+            var dromedary = pascal.ToDromedary();
 
             var clonestring = "alohaaa";
             var cloneobject = new { foo = "bar" };
@@ -35,6 +61,20 @@ namespace CoreKit.Test
             clonedstring = "bye";
             clonedobject = new { foo = "nobar" };
             clonedarray = new List<dynamic> { };
+
+            var arraycls = new List<Test> { null };
+            var arrayint = new List<int?> { 0, 1, 2, null };
+            var arraylon = new List<long> { 0, 0, 999 };
+            var arraystr = new List<string> { "aaa", " ", "", null };
+            var arrayflt = new List<double> { 0.1, 0.0 };
+
+
+            var x1 = arraycls.TrimEmpty().HasValue();
+            var x2 = arrayint.TrimEmpty().HasValue();
+            var x22 = arrayint.TrimEmptyOrLTE0().HasValue();
+            var x3 = arraylon.TrimEmptyOrLTE0().HasValue();
+            var x4 = arraystr.TrimEmpty().HasValue();
+            var x5 = arrayflt.TrimEmptyOrLTE0().HasValue();
 
             // caching
             var cache = new CacheKit(new CacheKitConfiguration { DefaultCachingMinutes = 1 });
@@ -68,9 +108,47 @@ namespace CoreKit.Test
             // smtp
             // use Allow less secure apps: ON
             // https://stackoverflow.com/questions/20906077/gmail-error-the-smtp-server-requires-a-secure-connection-or-the-client-was-not#26709761
-            using (var smtp = new SMTPKit(new SMTPKitConfiguration { EnableSSL = true, Server = "smtp.gmail.com", Port = 587, User = "tabatadzedat@gmail.com", Password = "xxx" }))
+            using (var smtp = new SMTPKit(new SMTPKitConfiguration
             {
-                smtp.SendAsync("tabatadzedat@gmail.com", "ola", "bola").Wait();
+                EnableSSL = false,
+                Server = "smtp.mailmock.io",
+                Port = 587,
+                Sender = "optio.insight@lb.ge", //"test-mailbox@optio.ai",
+                //User = "dec8ea39-5bea-39a9-d9c7-0ff36680222a",
+                //Password = "e03a72e3-75aa-5aa3-09b5-008ce0053854"
+            }))
+            {
+                // smtp.SendAsync("tabatadzedat@gmail.com", "ola", "bola").Wait();
+            }
+
+            // sync
+            var stest = new Test { };
+            SyncKit.Run(() => stest.DoSome());
+            var sync1 = SyncKit.Run(() => stest.GiveSome(1735172));
+
+            // http
+            using (var http = new HTTPKit(new HTTPKitConfiguration
+            {
+                ServiceURL = "https://api.discovery.optio.ai/",
+                UseWebProxy = true,
+                WebProxyURL = "---"
+                //ClientHeader = "client",
+                //Client = "liberty",                
+                //SecretHeader = "key",
+                //Secret = "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31"
+            }))
+            {
+                var res = http.Request<dynamic>(
+                    HTTPKitRequestMethod.Get,
+                    "api/matrix/categories",
+                    "/20200323.01",
+                    new Dictionary<string, string>
+                    {
+                        { "client", "liberty" },
+                        { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
+                    }
+                );
+                var x = 0;
             }
 
             Console.WriteLine("all CoreKit tests done...");

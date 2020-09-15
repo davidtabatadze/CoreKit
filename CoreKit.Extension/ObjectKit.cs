@@ -20,10 +20,10 @@ namespace CoreKit.Extension.Class
             // In case if null
             if (source == null)
             {
-                // Returning default
-                return default(T);
+                // Returning input
+                return source;
             }
-            // Serialize objrct to json
+            // Serialize object to json
             var json = JsonConvert.SerializeObject(source);
             // Deserialize as fresh copy
             return JsonConvert.DeserializeObject<T>(json);

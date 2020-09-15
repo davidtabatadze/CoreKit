@@ -30,18 +30,58 @@ namespace CoreKit.Extension.String
         }
 
         /// <summary>
+        /// Get the string transformed to upper camel case
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Transformed string</returns>
+        public static string ToPascal(this string source)
+        {
+            return source[0].ToString().ToUpper() + source.Remove(0, 1);
+        }
+
+        /// <summary>
+        /// Get the string transformed to lower camel case
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Transformed string</returns>
+        public static string ToDromedary(this string source)
+        {
+            return source[0].ToString().ToLower() + source.Remove(0, 1);
+        }
+
+        /// <summary>
         /// Get the string trimmed every possible way
         /// </summary>
         /// <param name="source">Source string</param>
         /// <returns>Fully treamed string</returns>
         public static string TrimFull(this string source)
         {
-            return string.Join(
+            return source.IsEmpty() ? source : string.Join(
                 " ",
                 source.Split(' ')
                       .Where(w => w.HasValue())
                       .Select(w => w.Trim())
             );
+        }
+
+        /// <summary>
+        /// Get lower string trimmed every possible way
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Fully treamed string</returns>
+        public static string TrimFullAndLower(this string source)
+        {
+            return source.IsEmpty() ? source : source.TrimFull().ToLower();
+        }
+
+        /// <summary>
+        /// Get upper string trimmed every possible way
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Fully treamed string</returns>
+        public static string TrimFullAndUpper(this string source)
+        {
+            return source.IsEmpty() ? source : source.TrimFull().ToUpper();
         }
 
     }

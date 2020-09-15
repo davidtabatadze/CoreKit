@@ -20,7 +20,7 @@ Cache remove/clean.</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
-    <PackageReference Include="System.Runtime.Caching" Version="4.6.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

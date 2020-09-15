@@ -56,7 +56,7 @@ namespace CoreKit.Connectivity.SMTP
         {
             // Compose mail and return
             var mail = new MailMessage { };
-            mail.From = new MailAddress(Configuration.User);
+            mail.From = new MailAddress(Configuration.Sender ?? Configuration.User);
             mail.To.Add(destination);
             mail.Subject = subject;
             mail.IsBodyHtml = html;

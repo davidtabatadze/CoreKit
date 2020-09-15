@@ -1,13 +1,13 @@
 ﻿
 
-namespace CoreKit.Connectivity
+namespace CoreKit.Connectivity.HTTP
 {
 
     /// <summary>
-    /// Represents response model of proxy kit <see cref="ProxyKit"/>
+    /// Represents response model of proxy kit <see cref="HTTPKit"/>
     /// </summary>
     /// <typeparam name="T">Type of response data / value</typeparam>
-    public class ProxyKitResponse<T>
+    public class HTTPKitResponse<T>
     {
 
         /// <summary>

@@ -35,7 +35,8 @@ namespace CoreKit.Cryptography.PBKDF2
         public PBKDF2Kit(PBKDF2KitConfiguration configuration)
         {
             // ...
-            configuration.SaltSize = configuration.SaltSize < 0 ? 1 : configuration.SaltSize;
+            configuration.SaltSize = configuration.SaltSize <= 0 ? 8 : configuration.SaltSize;
+            configuration.HashIterations = configuration.HashIterations <= 0 ? 1024 : configuration.HashIterations;
             Configuration = configuration;
         }
 
@@ -45,7 +46,7 @@ namespace CoreKit.Cryptography.PBKDF2
         public PBKDF2Kit()
         {
             // ...
-            Configuration = new PBKDF2KitConfiguration { HashIterations = 100000, SaltSize = 34 };
+            Configuration = new PBKDF2KitConfiguration { HashIterations = 65536, SaltSize = 32 };
         }
 
         /// <summary>

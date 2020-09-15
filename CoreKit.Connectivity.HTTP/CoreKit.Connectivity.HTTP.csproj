@@ -4,21 +4,28 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>David Tabatadze</Authors>
-    <Description>.net standard smtp mail manager based on SmtpClient</Description>
-    <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <Company>David Tabatadze</Company>
+    <Description>.net standard http request manager based on HttpClient</Description>
+    <Copyright>Copyright (c) 2020 David Tabatadze</Copyright>
     <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
-    <PackageTags>.net standard netstandard tool kit toolkit smtp smtpclient mail david tabatadze optio optioai optio.ai</PackageTags>
-    <PackageReleaseNotes>SMTP mail send.
-SMTP mail async send.</PackageReleaseNotes>
+    <PackageTags>.net standard netstandard tool kit toolkit http request david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageReleaseNotes>Cache get.
+Cache put.
+Cache post.
+Cache delete.</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
-    <Version>1.0.9</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreKit.Extension\CoreKit.Extension.csproj" />
+    <ProjectReference Include="..\CoreKit.Sync\CoreKit.Sync.csproj" />
   </ItemGroup>
 
 </Project>

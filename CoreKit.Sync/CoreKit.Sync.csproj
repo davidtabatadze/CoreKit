@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>David Tabatadze</Authors>
+    <Description>.net standard synchronous runner for asynchronous methods</Description>
+    <Copyright>Copyright (c) 2020 David Tabatadze</Copyright>
+    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
+    <RepositoryType>C#</RepositoryType>
+    <PackageTags>.net standard netstandard tool kit toolkit sync async david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageReleaseNotes>Sync Run
+Sync Run&lt;T&gt;</PackageReleaseNotes>
+    <NeutralLanguage>ka-GE</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+</Project>

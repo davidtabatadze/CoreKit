@@ -1,12 +1,12 @@
 ﻿
 
-namespace CoreKit.Connectivity
+namespace CoreKit.Connectivity.HTTP
 {
 
     /// <summary>
-    /// Represents a configuration for proxy kit <see cref="ProxyKit"/>
+    /// Represents a configuration for http kit <see cref="HTTPKit"/>
     /// </summary>
-    public class ProxyKitConfiguration
+    public class HTTPKitConfiguration
     {
 
         /// <summary>
