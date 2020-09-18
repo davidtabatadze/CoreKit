@@ -66,9 +66,10 @@ namespace CoreKit.Caching
         /// <param name="minutes">Minutes to maintain cached value</param>
         public void Set(string key, object data, int? minutes = null)
         {
-            // In case the data is not present, nothing will be cached
+            // In case the data is not present,
             if (data == null)
             {
+                // nothing will be cached
                 return;
             }
             // First removing existing value of given key
@@ -138,6 +139,7 @@ namespace CoreKit.Caching
         /// <param name="key">Key of the value to remove</param>
         public void Remove(string key)
         {
+            // Do remove
             Cache.Remove(key);
         }
 
@@ -146,8 +148,10 @@ namespace CoreKit.Caching
         /// </summary>
         public void Clear()
         {
+            // For every item in cache ...
             foreach (var item in Cache)
             {
+                // Execute remove
                 Remove(item.Key);
             }
         }
