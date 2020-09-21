@@ -12,22 +12,22 @@ namespace CoreKit.Connectivity.HTTP
         /// <summary>
         /// Get request
         /// </summary>
-        Get = 1,
-
-        /// <summary>
-        /// Post request
-        /// </summary>
-        Post = 2,
+        GET,
 
         /// <summary>
         /// Put request
         /// </summary>
-        Put = 3,
+        PUT,
+
+        /// <summary>
+        /// Post request
+        /// </summary>
+        POST,
 
         /// <summary>
         /// Delete request
         /// </summary>
-        Delete = 4
+        DELETE
 
     }
 

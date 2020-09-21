@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections.Generic;
 
 namespace CoreKit.Connectivity.HTTP
 {
@@ -30,24 +30,9 @@ namespace CoreKit.Connectivity.HTTP
         public int WebProxyPort { get; set; }
 
         /// <summary>
-        /// Client name
+        /// Default headers of request
         /// </summary>
-        public string Client { get; set; }
-
-        /// <summary>
-        /// Client name representation name in header
-        /// </summary>
-        public string ClientHeader { get; set; }
-
-        /// <summary>
-        /// Client secret
-        /// </summary>
-        public string Secret { get; set; }
-
-        /// <summary>
-        /// Client secret representation name in header
-        /// </summary>
-        public string SecretHeader { get; set; }
+        public Dictionary<string, string> Headers { get; set; }
 
     }
 

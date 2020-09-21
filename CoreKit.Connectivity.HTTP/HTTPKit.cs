@@ -84,20 +84,13 @@ namespace CoreKit.Connectivity.HTTP
                     );
                     // Fixing headers
                     headers = headers ?? new Dictionary<string, string> { };
-                    // Configuring header client
-                    if (Configuration.ClientHeader.HasValue() && Configuration.Client.HasValue())
+                    Configuration.Headers = Configuration.Headers ?? new Dictionary<string, string> { };
+                    // Applying configuration headers
+                    foreach (var header in Configuration.Headers)
                     {
-                        if (!headers.ContainsKey(Configuration.ClientHeader))
+                        if (!headers.ContainsKey(header.Key))
                         {
-                            headers.Add(Configuration.ClientHeader, Configuration.Client);
-                        }
-                    }
-                    // Configuring header secret
-                    if (Configuration.SecretHeader.HasValue() && Configuration.Secret.HasValue())
-                    {
-                        if (!headers.ContainsKey(Configuration.SecretHeader))
-                        {
-                            headers.Add(Configuration.SecretHeader, Configuration.Secret);
+                            headers.Add(header.Key, header.Value);
                         }
                     }
                     // Configuring headers
@@ -108,15 +101,20 @@ namespace CoreKit.Connectivity.HTTP
                     // Defining request
                     var request = new HttpResponseMessage();
                     // GET method
-                    if (method == HTTPKitRequestMethod.Get)
+                    if (method == HTTPKitRequestMethod.GET)
                     {
                         // Prepare params
                         payload = payload ?? "";
                         // Do GET
                         request = await http.GetAsync(url + payload.ToString());
                     }
+                    // PUT method
+                    if (method == HTTPKitRequestMethod.PUT)
+                    {
+                        throw new NotImplementedException();
+                    }
                     // POST method
-                    if (method == HTTPKitRequestMethod.Post)
+                    if (method == HTTPKitRequestMethod.POST)
                     {
                         // პარამეტრების მომზადება
                         var content = new StringContent(
@@ -133,6 +131,11 @@ namespace CoreKit.Connectivity.HTTP
                         );
                         // Do POST
                         request = await http.PostAsync(url, content);
+                    }
+                    // DELETE method
+                    if (method == HTTPKitRequestMethod.DELETE)
+                    {
+                        throw new NotImplementedException();
                     }
                     // Defining response
                     var response = await request.Content.ReadAsStringAsync();

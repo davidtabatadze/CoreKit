@@ -17,6 +17,7 @@ Cache put.
 Cache post.
 Cache delete.</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

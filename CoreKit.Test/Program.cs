@@ -130,22 +130,22 @@ namespace CoreKit.Test
             using (var http = new HTTPKit(new HTTPKitConfiguration
             {
                 ServiceURL = "https://api.discovery.optio.ai/",
-                UseWebProxy = true,
-                WebProxyURL = "---"
-                //ClientHeader = "client",
-                //Client = "liberty",                
-                //SecretHeader = "key",
-                //Secret = "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31"
+                UseWebProxy = false,
+                WebProxyURL = "---",
+                Headers = new Dictionary<string, string>
+                {
+                    { "client", "aaa" },
+                    { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
+                }
             }))
             {
                 var res = http.Request<dynamic>(
-                    HTTPKitRequestMethod.Get,
+                    HTTPKitRequestMethod.GET,
                     "api/matrix/categories",
                     "/20200323.01",
                     new Dictionary<string, string>
                     {
-                        { "client", "liberty" },
-                        { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
+                        { "client", "liberty" }
                     }
                 );
                 var x = 0;
