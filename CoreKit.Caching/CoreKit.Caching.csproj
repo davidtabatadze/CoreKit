@@ -3,15 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
+    <Version>2.0.0</Version>
     <Authors>David Tabatadze</Authors>
     <Description>.net standard cache manager based on MemoryCache</Description>
-    <Copyright>Copyright (c) 2019 David Tabatadze</Copyright>
+    <Copyright>Copyright (c) 2020 David Tabatadze</Copyright>
     <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
-    <PackageTags>.net standard netstandard tool kit toolkit cache caching david tabatadze optio optioai optio.ai</PackageTags>
+    <PackageTags>.net standard netstandard tool kit toolkit cache caching david tabatadze</PackageTags>
     <PackageReleaseNotes>Cache set.
 Cache get.
 Cache remove/clean.</PackageReleaseNotes>

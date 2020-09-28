@@ -34,6 +34,11 @@ namespace CoreKit.Caching
         /// <param name="configuration">Configuration <see cref="CacheKitConfiguration"/></param>
         public CacheKit(CacheKitConfiguration configuration)
         {
+            // Setting default cacheing minutes
+            if (configuration.DefaultCachingMinutes <= 0)
+            {
+                configuration.DefaultCachingMinutes = 60;
+            }
             // ...
             Configuration = configuration;
         }
