@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Text;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace CoreKit.Extension.String
 {
@@ -47,6 +50,20 @@ namespace CoreKit.Extension.String
         public static string ToDromedary(this string source)
         {
             return source[0].ToString().ToLower() + source.Remove(0, 1);
+        }
+
+        /// <summary>
+        /// Gets the string transofmed to SHA1 hash
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>SHA1 hash</returns>
+        public static string ToSHA1(this string source)
+        {
+            return BitConverter.ToString(
+                new SHA1Managed().ComputeHash(
+                    Encoding.UTF8.GetBytes(source)
+                )
+            ).Replace("-", "").ToLower();
         }
 
         /// <summary>

@@ -11,6 +11,8 @@ using System.Net.Mail;
 using System.Net;
 using CoreKit.Cryptography.PBKDF2;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CoreKit.Test
 {
@@ -61,6 +63,11 @@ namespace CoreKit.Test
             clonedstring = "bye";
             clonedobject = new { foo = "nobar" };
             clonedarray = new List<dynamic> { };
+
+            var sha1 = "dat".ToSHA1();
+            var sha2 = "dat".ToSHA1();
+            var sha3 = "aiwdgwid iuawgd awgdi agid awdiugaw iawidia awdwi aiwdiaiw iaw idgaiwdiawgge g ag iaie ".ToSHA1();
+            var sha4 = "aiwdgwid iuawgd awgdi agid awdiugaw+23 iawidia awdwi aiwdiaiw iaw idgaiwdiawgge g ag iaie ".ToSHA1();
 
             var arraycls = new List<Test> { null };
             var arrayint = new List<int?> { 0, 1, 2, null };
