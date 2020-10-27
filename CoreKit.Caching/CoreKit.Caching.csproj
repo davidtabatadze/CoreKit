@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Authors>David Tabatadze</Authors>
     <Description>.net standard cache manager based on MemoryCache</Description>
     <Copyright>Copyright (c) 2020 David Tabatadze</Copyright>
-    <PackageLicenseUrl>https://github.com/davidtabatadze/CoreKit/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>

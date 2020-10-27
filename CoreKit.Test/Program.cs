@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using CoreKit.Caching;
-using CoreKit.Extension.Class;
-using CoreKit.Extension.String;
-using CoreKit.Extension.Collection;
-using CoreKit.Connectivity.SMTP;
+﻿using CoreKit.Caching;
 using CoreKit.Connectivity.HTTP;
-using CoreKit.Sync;
-using System.Net.Mail;
-using System.Net;
+using CoreKit.Connectivity.SMTP;
 using CoreKit.Cryptography.PBKDF2;
+using CoreKit.Extension.Class;
+using CoreKit.Extension.Collection;
+using CoreKit.Extension.String;
+using CoreKit.Sync;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace CoreKit.Test
 {
@@ -31,6 +27,14 @@ namespace CoreKit.Test
             {
                 Console.WriteLine("giving some..");
                 return (x / 123).ToString();
+            }
+
+            public void CheckCache(CacheKit cache)
+            {
+                var x = cache.Get<string>("x");
+                var y = cache.Get<string>("y");
+                var z = cache.Get<string>("z");
+                var o = 0;
             }
         }
 
@@ -86,7 +90,7 @@ namespace CoreKit.Test
             // caching
             var cache = new CacheKit(new CacheKitConfiguration { DefaultCachingMinutes = 1 });
             var val = cache.Get<string>("key");
-            cache.Set("key", "ola");
+            cache.Set("key", "ola", 5);
             val = cache.Get<string>("key");
             val = cache.Get<string>("key");
             cache.Set("key", "ola");
@@ -94,6 +98,10 @@ namespace CoreKit.Test
             val = cache.Get<string>("key");
             cache.Remove("key");
             val = cache.Get<string>("key");
+
+            cache.Set("x", "x");
+            cache.Set("y", "y", 0);
+            cache.Get("z", () => new Test().GiveSome(999), 0).Wait();
 
             // cryptography
             using (var pbkdf2 = new PBKDF2Kit())
@@ -158,7 +166,15 @@ namespace CoreKit.Test
                 var x = 0;
             }
 
-            Console.WriteLine("all CoreKit tests done...");
+            Console.WriteLine("All CoreKit tests done...");
+
+            Console.WriteLine("\n\nNow possible to check cache...");
+            while (true)
+            {
+                Console.ReadLine();
+                new Test().CheckCache(cache);
+            }
+
             Console.ReadKey();
         }
     }

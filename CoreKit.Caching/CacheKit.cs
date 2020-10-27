@@ -69,7 +69,11 @@ namespace CoreKit.Caching
         /// <param name="key">Key of the value to cache</param>
         /// <param name="data">value of object to be cached</param>
         /// <param name="minutes">Minutes to maintain cached value</param>
-        public void Set(string key, object data, int? minutes = null)
+        /// <remarks>
+        /// minutes null - means DefaultCachingMinutes will be used.
+        /// minutes 0 - means cached value will be maintained while application running.
+        /// </remarks>
+        public void Set(string key, object data, uint? minutes = null)
         {
             // In case the data is not present,
             if (data == null)
@@ -77,16 +81,25 @@ namespace CoreKit.Caching
                 // nothing will be cached
                 return;
             }
-            // First removing existing value of given key
+            // Defining policy
+            var policy = new CacheItemPolicy { };
+            // 0 means cached value will be maintained while application running
+            if (minutes == 0)
+            {
+                policy.Priority = CacheItemPriority.NotRemovable;
+            }
+            // Otherwise expiration time will be set
+            else
+            {
+                // Defining expiration
+                minutes = minutes ?? Configuration.DefaultCachingMinutes;
+                var expiration = DateTime.Now + TimeSpan.FromMinutes(minutes.Value);
+                policy.AbsoluteExpiration = expiration;
+            }
+            // Removing existing value of given key
             Cache.Remove(key);
-            // Determining expiration
-            minutes = minutes ?? Configuration.DefaultCachingMinutes;
-            var expiration = DateTime.Now + TimeSpan.FromMinutes(minutes.Value);
             // Caching the data with composed policy
-            Cache.Add(
-                new CacheItem(key, data),
-                new CacheItemPolicy { AbsoluteExpiration = expiration }
-            );
+            Cache.Add(new CacheItem(key, data), policy);
         }
 
         /// <summary>
@@ -106,35 +119,23 @@ namespace CoreKit.Caching
         /// <typeparam name="T">Type of the chached value</typeparam>
         /// <param name="key">Key of the chached value</param>
         /// <param name="acquire">Function to load value if it's not in the cache yet</param>
+        /// <param name="minutes">Minutes to maintain cached value</param>
         /// <returns>Cached value associated with the specified key</returns>
-        public async Task<T> Get<T>(string key, Func<Task<T>> acquire)
+        /// <remarks>
+        /// minutes null - means DefaultCachingMinutes will be used.
+        /// minutes 0 - means cached value will be maintained while application running.
+        /// </remarks>
+        public async Task<T> Get<T>(string key, Func<Task<T>> acquire, uint? minutes = null)
         {
-            return await Get(key, Configuration.DefaultCachingMinutes, acquire);
-        }
-
-        /// <summary>
-        /// Get a cached value. If it's not there, first load and cache it
-        /// </summary>
-        /// <typeparam name="T">Type of the chached value</typeparam>
-        /// <param name="key">Key of the chached value</param>
-        /// <param name="cacheTime">Cache time in minutes (0 - do not cache)</param>
-        /// <param name="acquire">Function to load value if it's not in the cache yet</param>
-        /// <returns>Cached value associated with the specified key</returns>
-        public async Task<T> Get<T>(string key, int cacheTime, Func<Task<T>> acquire)
-        {
-            // If value is already cached at the specified key,
-            // return the value
+            // If value is already cached at the specified key, return the value
             if (IsSet(key))
             {
                 return Get<T>(key);
             }
-            // First execute the function to get value
+            // First execute the function to get the value
             var result = await acquire();
-            // Function execution result will be cached and returned
-            if (cacheTime > 0)
-            {
-                Set(key, result, cacheTime);
-            }
+            // Function value will be cached and returned
+            Set(key, result, minutes);
             return result;
         }
 
