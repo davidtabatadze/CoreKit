@@ -43,6 +43,9 @@ namespace CoreKit.Test
             Console.WriteLine("CoreKit test...");
 
             // extensions
+            var rand1 = string.Empty.Random(10);
+            var rand2 = string.Empty.Random(20);
+            var rand3 = string.Empty.Random(30);
             var str = "j  a     b  C         ";
             string str1 = null;
             var strIsEmpty = str.IsEmpty();

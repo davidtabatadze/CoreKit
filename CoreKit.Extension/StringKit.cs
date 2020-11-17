@@ -101,6 +101,58 @@ namespace CoreKit.Extension.String
             return source.IsEmpty() ? source : source.TrimFull().ToUpper();
         }
 
+        /// <summary>
+        /// Get sentance of words
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <param name="words">Words</param>
+        /// <returns>Sentance string</returns>
+        public static string ToSentence(this string source, params string[] words) {
+            source = string.Join(" ", words.Select(w => w.TrimFull()));
+            return source;
+        }
+
+        /// <summary>
+        /// Get generated random string
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <param name="length">Length of random result</param>
+        /// <param name="useNumbers">Use numbers in random result</param>
+        /// <param name="useLower">Use lower letters in random result</param>
+        /// <param name="useUpper">Use upper letters in random result</param>
+        /// <param name="useSpecial">Use special symbols in random result</param>
+        /// <returns>Random string</returns>
+        public static string Random(this string source, short length, bool useNumbers = true, bool useLower = true, bool useUpper = true, bool useSpecial = true)
+        {
+            var specials = "~!@#$%^&*";
+            var numbers = "0123456789";
+            var lowers = "abcdefghijklmnopqrstuvwxyz";
+            var uppers = lowers.ToUpper();
+            var pool = string.Empty;
+            if (useNumbers)
+            {
+                pool += numbers;
+            }
+            if (useLower)
+            {
+                pool += lowers;
+            }
+            if (useUpper)
+            {
+                pool += uppers;
+            }
+            if (useSpecial)
+            {
+                pool += specials;
+            }
+            source = new string(
+                Enumerable.Range(0, length)
+                          .Select(x => pool[new Random().Next(0, pool.Length)])
+                          .ToArray()
+            );
+            return source;
+        }
+
     }
 
 }
