@@ -36,6 +36,23 @@ namespace CoreKit.Test
                 var z = cache.Get<string>("z");
                 var o = 0;
             }
+
+            private void do1()
+            {
+                Console.WriteLine("doo....");
+            }
+            private void do2(string job)
+            {
+                Console.WriteLine("done " + job);
+            }
+            private double do3(int x, double y)
+            {
+                return x + y;
+            }
+            private async Task do4(int x, int y)
+            {
+                await Task.Run(() => { Console.WriteLine(x + y); });
+            }
         }
 
         static void Main(string[] args)
@@ -89,6 +106,14 @@ namespace CoreKit.Test
             var x3 = arraylon.TrimEmptyOrLTE0().HasValue();
             var x4 = arraystr.TrimEmpty().HasValue();
             var x5 = arrayflt.TrimEmptyOrLTE0().HasValue();
+
+            var cls = new Test { };
+            cls.InvokeNonPublic("do1", null);
+            cls.InvokeNonPublic("do2", new[] { "dodolina" });
+            Console.WriteLine(cls.InvokeNonPublic<Test, double>("do3", new object[] { 1, 665.666 }));
+            cls.InvokeNonPublicAsync("do4", new object[] { 1, 665 }).Wait();
+
+            
 
             // caching
             var cache = new CacheKit(new CacheKitConfiguration { DefaultCachingMinutes = 1 });
