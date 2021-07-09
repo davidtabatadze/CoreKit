@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.7</Version>
+    <Version>3.0.3</Version>
     <Authors>David Tabatadze</Authors>
     <Description>.net standard extensions for reference and/or non reference types.</Description>
     <Copyright>Copyright (c) 2020 David Tabatadze</Copyright>
@@ -14,12 +14,14 @@
     <PackageTags>.net standard netstandard tool kit toolkit extension extensions david tabatadze optio optioai optio.ai</PackageTags>
     <PackageReleaseNotes>Extensions for IEnumerable/IList.
 Extensions for Object.
-Extensions for String.</PackageReleaseNotes>
+Extensions for String.
+Extensions for File.</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
+    <PackageLicenseExpression></PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

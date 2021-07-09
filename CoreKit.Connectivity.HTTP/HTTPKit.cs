@@ -83,20 +83,20 @@ namespace CoreKit.Connectivity.HTTP
                         new MediaTypeWithQualityHeaderValue("application/json")
                     );
                     // Fixing headers
-                    headers = headers ?? new Dictionary<string, string> { };
+                    headers ??= new Dictionary<string, string> { };
                     Configuration.Headers = Configuration.Headers ?? new Dictionary<string, string> { };
+                    // Configuring headers
+                    foreach (var header in headers)
+                    {
+                        http.DefaultRequestHeaders.Add(header.Key, header.Value);
+                    }
                     // Applying configuration headers
                     foreach (var header in Configuration.Headers)
                     {
                         if (!headers.ContainsKey(header.Key))
                         {
-                            headers.Add(header.Key, header.Value);
+                            http.DefaultRequestHeaders.Add(header.Key, header.Value);
                         }
-                    }
-                    // Configuring headers
-                    foreach (var header in headers)
-                    {
-                        http.DefaultRequestHeaders.Add(header.Key, header.Value);
                     }
                     // Defining request
                     var request = new HttpResponseMessage();
@@ -104,7 +104,7 @@ namespace CoreKit.Connectivity.HTTP
                     if (method == HTTPKitRequestMethod.GET)
                     {
                         // Prepare params
-                        payload = payload ?? "";
+                        payload ??= "";
                         // Do GET
                         request = await http.GetAsync(url + payload.ToString());
                     }
@@ -150,7 +150,7 @@ namespace CoreKit.Connectivity.HTTP
                     else
                     {
                         result.Error = true;
-                        result.ErrorText = JsonConvert.DeserializeObject<string>(response);
+                        result.ErrorText = response; //JsonConvert.DeserializeObject<string>(response);
                         if (result.ErrorText.IsEmpty())
                         {
                             result.ErrorText = request.ReasonPhrase;

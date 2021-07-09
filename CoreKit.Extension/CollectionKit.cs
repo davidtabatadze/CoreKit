@@ -6,7 +6,7 @@ namespace CoreKit.Extension.Collection
 {
 
     /// <summary>
-    /// Represents an extension for collections
+    /// Represents an extension for <see cref="IEnumerable{T}"/> or <see cref="IList{T}"/>
     /// </summary>
     public static class CollectionKit
     {

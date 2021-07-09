@@ -14,4 +14,10 @@
     <ProjectReference Include="..\CoreKit.Sync\CoreKit.Sync.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="txt.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

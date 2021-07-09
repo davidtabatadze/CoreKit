@@ -10,7 +10,7 @@ namespace CoreKit.Connectivity.SMTP
     /// <summary>
     /// Represents a manager for SMTP Client
     /// </summary>
-    public class SMTPKit : IDisposable
+    public class SMTPKit : ISMTPKit, IDisposable
     {
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace CoreKit.Extension.String
 {
 
     /// <summary>
-    /// Represents an extension for strings
+    /// Represents an extension for <see cref="string"/>
     /// </summary>
     public static class StringKit
     {
@@ -107,7 +107,8 @@ namespace CoreKit.Extension.String
         /// <param name="source">Source string</param>
         /// <param name="words">Words</param>
         /// <returns>Sentance string</returns>
-        public static string ToSentence(this string source, params string[] words) {
+        public static string ToSentence(this string source, params string[] words)
+        {
             source = string.Join(" ", words.Select(w => w.TrimFull()));
             return source;
         }
@@ -115,14 +116,13 @@ namespace CoreKit.Extension.String
         /// <summary>
         /// Get generated random string
         /// </summary>
-        /// <param name="source">Source string</param>
         /// <param name="length">Length of random result</param>
         /// <param name="useNumbers">Use numbers in random result</param>
         /// <param name="useLower">Use lower letters in random result</param>
         /// <param name="useUpper">Use upper letters in random result</param>
         /// <param name="useSpecial">Use special symbols in random result</param>
         /// <returns>Random string</returns>
-        public static string Random(this string source, short length, bool useNumbers = true, bool useLower = true, bool useUpper = true, bool useSpecial = true)
+        public static string Random(short length, bool useNumbers = true, bool useLower = true, bool useUpper = true, bool useSpecial = true)
         {
             var specials = "~!@#$%^&*";
             var numbers = "0123456789";
@@ -145,12 +145,12 @@ namespace CoreKit.Extension.String
             {
                 pool += specials;
             }
-            source = new string(
+            var result = new string(
                 Enumerable.Range(0, length)
                           .Select(x => pool[new Random().Next(0, pool.Length)])
                           .ToArray()
             );
-            return source;
+            return result;
         }
 
     }

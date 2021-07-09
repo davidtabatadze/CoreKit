@@ -6,7 +6,7 @@ namespace CoreKit.Extension.Class
 {
 
     /// <summary>
-    /// Represents an extension for objects
+    /// Represents an extension for <see cref="object"/>
     /// </summary>
     public static class ObjectKit
     {
@@ -29,6 +29,18 @@ namespace CoreKit.Extension.Class
             var json = JsonConvert.SerializeObject(source);
             // Deserialize as fresh copy
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        /// <summary>
+        /// ???
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="N"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static N CloneTo<T, N>(this T source)
+        {
+            return default(N);
         }
 
         /// <summary>
