@@ -7,7 +7,6 @@ using CoreKit.Extension.Class;
 using CoreKit.Extension.Collection;
 using CoreKit.Extension.String;
 using CoreKit.Sync;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,203 +20,6 @@ namespace CoreKit.Test
 
         class Test
         {
-            class Versionables<T>
-            {
-                public string Version { get; set; }
-                public List<T> Data { get; set; }
-
-            }
-            /// <summary>
-            /// გატარების მდებარეობა ??? Location2?
-            /// </summary>
-            public class Location2
-            {
-
-                /// <summary>
-                /// ქვეყანა
-                /// </summary>
-                [JsonProperty("cu", NullValueHandling = NullValueHandling.Ignore)]
-                public string Country { get; set; }
-
-                /// <summary>
-                /// ქალაქი
-                /// </summary>
-                [JsonProperty("ct", NullValueHandling = NullValueHandling.Ignore)]
-                public string City { get; set; }
-
-                /// <summary>
-                /// მისამართი
-                /// </summary>
-                [JsonProperty("ad", NullValueHandling = NullValueHandling.Ignore)]
-                public string Address { get; set; }
-
-                /// <summary>
-                /// გრძედი
-                /// </summary>
-                [JsonProperty("lo", NullValueHandling = NullValueHandling.Ignore)]
-                public double Longitude { get; set; }
-
-                /// <summary>
-                /// განედი
-                /// </summary>
-                [JsonProperty("la", NullValueHandling = NullValueHandling.Ignore)]
-                public double Latitude { get; set; }
-
-            }
-
-            /// <summary>
-            /// დაკატეგორიზებული ტრანზაკცია ღრუბლიდან
-            /// </summary>
-            public class CategorizationTransactionResponse
-            {
-
-                /// <summary>
-                /// კონტექსტური მონაცემები
-                /// </summary>
-                public class Context
-                {
-
-                    /// <summary>
-                    /// კლიენტის ნაწილი (კლიენტის მიერ გამოგზავნილი პარამეტრები უცვლელად)
-                    /// </summary>
-                    [JsonProperty("rq", NullValueHandling = NullValueHandling.Ignore)]
-                    public Dictionary<string, object> Request { get; set; }
-
-                    /// <summary>
-                    /// ოპტიოს ნაწილი (კატეგორიზაციის დამატებითი მონაცემები, აღწერები, ინსტრუქციები და ა.შ.)
-                    /// </summary>
-                    [JsonProperty("rp", NullValueHandling = NullValueHandling.Ignore)]
-                    public Dictionary<string, object> Response { get; set; }
-
-                }
-
-                /// <summary>
-                /// ტრანზაქციის იდენტიფიკატორი
-                /// </summary>
-                [JsonProperty("id")]
-                public string Code { get; set; }
-
-                /// <summary>
-                /// კონტექსტური და/ან დამატებითი მონაცემები
-                /// </summary>
-                [JsonProperty("cd", NullValueHandling = NullValueHandling.Ignore)]
-                public Context ContextData { get; set; }
-
-                /// <summary>
-                /// გატარების მდებარეობა
-                /// </summary>
-                [JsonProperty("lc", NullValueHandling = NullValueHandling.Ignore)]
-                public Location2 Location { get; set; }
-
-                /// <summary>
-                /// გადახდის ტერმინალი
-                /// </summary>
-                [JsonProperty("tr", NullValueHandling = NullValueHandling.Ignore)]
-                public string Terminal { get; set; }
-
-                /// <summary>
-                /// კატეგორიის წარმომავლობა merchant | mcc | rule | none
-                /// </summary>
-                [JsonProperty("co")]
-                public string CategoryOrigin { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული კატეგორიის კოდი
-                /// </summary>
-                [JsonProperty("cc")]
-                public int CategoryCode { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული კატეგორიის სახელი
-                /// </summary>
-                [JsonProperty("cn")]
-                public string CategoryName { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული მშობელი(ზედა) კატეგორიის კოდი
-                /// </summary>
-                [JsonProperty("pc")]
-                public int CategoryParentCode { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული მშობელი(ზედა) კატეგორიის სახელი
-                /// </summary>
-                [JsonProperty("pn")]
-                public string CategoryParentName { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული ტიპის კოდი
-                /// </summary>
-                [JsonProperty("tc")]
-                public short TypeCode { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული ტიპის სახელი
-                /// </summary>
-                [JsonProperty("tn")]
-                public string TypeName { get; set; }
-
-                /// <summary>
-                /// კატეგორიზაციის შედეგად მიღებული მერჩანტი
-                /// </summary>
-                [JsonProperty("mr")]
-                public string Merchant { get; set; }
-
-            }
-            public class CategorizationTransactionCloud
-            {
-
-                /// <summary>
-                /// უნიკალური გასაღები
-                /// </summary>
-                public string Code { get; set; }
-
-                /// <summary>
-                /// მდგომარეობა: posted ან pending
-                /// </summary>
-                public string State { get; set; }
-
-                /// <summary>
-                /// თარიღი
-                /// </summary>
-                public DateTime Date { get; set; }
-
-                /// <summary>
-                /// ვალუტის კოდი
-                /// </summary>
-                public string Currency { get; set; }
-
-                /// <summary>
-                /// თანხა
-                /// </summary>
-                public double Amount { get; set; }
-
-                /// <summary>
-                /// MCC კოდი
-                /// </summary>
-                public int? MCC { get; set; }
-
-                /// <summary>
-                /// სავარაუდო მერჩანტი
-                /// </summary>
-                public string Merchant { get; set; }
-
-                /// <summary>
-                /// გადახდის ტერმინალი
-                /// </summary>
-                public string Terminal { get; set; }
-
-                /// <summary>
-                /// გადახდის მდებარეობა
-                /// </summary>
-                public string Location { get; set; }
-
-                /// <summary>
-                /// წასაშლელი
-                /// </summary>
-                public bool Delete { get; set; }
-
-            }
 
             public string Prop { get; set; }
 
@@ -254,24 +56,24 @@ namespace CoreKit.Test
                     //var dddv = JsonConvert.DeserializeObject<Versionables<CategorizationTransactionCloud>>("{"version":"20200323.01","data":[{"code":"dt","contextData":null,"location":null,"terminal":"dt","categoryOrigin":"merchant","categoryCode":110102,"categoryName":"Fuel & Gas","categoryParentCode":110100,"categoryParentName":"Auto & Transport","typeCode":11,"typeName":"Spending","merchant":"Wissol"}]}");
 
 
-                    var result = http.Request<Versionables<CategorizationTransactionResponse>>(
-                       HTTPKitRequestMethod.POST,
-                       "api/categorize",
-                       new List<CategorizationTransactionCloud>
-                       {
-                           new CategorizationTransactionCloud{
-                               Code = "dt",
-                               State = "dt",
-                               Date = DateTime.Now,
-                               Currency = "dt",
-                               Amount = -1,
-                               MCC = 672,
-                               Merchant = "wissol",
-                               Location = "dt",
-                               Terminal = "dt"
-                           }
-                       }
-                   );
+                    // var result = http.Request<Versionables<CategorizationTransactionResponse>>(
+                    //    HTTPKitRequestMethod.POST,
+                    //    "api/categorize",
+                    //    new List<CategorizationTransactionCloud>
+                    //    {
+                    //        new CategorizationTransactionCloud{
+                    //            Code = "dt",
+                    //            State = "dt",
+                    //            Date = DateTime.Now,
+                    //            Currency = "dt",
+                    //            Amount = -1,
+                    //            MCC = 672,
+                    //            Merchant = "wissol",
+                    //            Location = "dt",
+                    //            Terminal = "dt"
+                    //        }
+                    //    }
+                    //);
                     var x = 0;
                 }
             }
@@ -299,8 +101,39 @@ namespace CoreKit.Test
         {
             try
             {
-                new Test().HTTP();
+
+                using (var http = new HTTPKit(new HTTPKitConfiguration
+                {
+                    ServiceURL = "http://localhost:7001/data/",
+                    UseWebProxy = false,
+                    WebProxyURL = "---",
+                    Headers = new Dictionary<string, string>
+                {
+                    { "client", "aaa" },
+                    { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
+                }
+                }))
+                {
+                    var res = http.Request<Test>(
+                        HTTPKitRequestMethod.POST,
+                        //"api/matrix/categories",
+                        "merchants/chart",
+                        new
+                        {
+                            DateFrom = DateTime.Now,
+                            Merchant = "dodolina",
+                            PageSkip = 666
+                        },
+                        //"/20200323.01",
+                        new Dictionary<string, string>
+                        {
+                        { "client", "liberty" }
+                        }
+                    );
+                    var x = 0;
+                }
                 return;
+
                 Console.WriteLine("CoreKit test...");
 
                 // extensions

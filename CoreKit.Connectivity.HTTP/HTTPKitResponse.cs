@@ -21,6 +21,11 @@ namespace CoreKit.Connectivity.HTTP
         public string ErrorText { get; set; }
 
         /// <summary>
+        /// Raw responce, in case if response is not convertable to T
+        /// </summary>
+        public string RawResponse { get; set; }
+
+        /// <summary>
         /// Proxy request result value
         /// </summary>
         public T Data { get; set; }

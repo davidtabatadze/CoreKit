@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -26,9 +26,9 @@ namespace CoreKit.Extension.Class
                 return source;
             }
             // Serialize object to json
-            var json = JsonConvert.SerializeObject(source);
+            var json = JsonSerializer.Serialize(source);
             // Deserialize as fresh copy
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonSerializer.Deserialize<T>(json);
         }
 
         /// <summary>

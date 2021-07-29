@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using CoreKit.Sync;
 using CoreKit.Extension.String;
 using Microsoft.Extensions.Options;
@@ -118,12 +119,12 @@ namespace CoreKit.Connectivity.HTTP
                     {
                         // პარამეტრების მომზადება
                         var content = new StringContent(
-                            JsonConvert.SerializeObject(
+                            JsonSerializer.Serialize(
                                 payload,
-                                Formatting.None,
-                                new JsonSerializerSettings
+                                typeof(object),
+                                new JsonSerializerOptions
                                 {
-                                    NullValueHandling = NullValueHandling.Ignore
+                                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                                 }
                             ),
                             Encoding.UTF8,
@@ -144,7 +145,16 @@ namespace CoreKit.Connectivity.HTTP
                     // Filling result in case of request success
                     if (request.IsSuccessStatusCode)
                     {
-                        result.Data = JsonConvert.DeserializeObject<T>(response);
+                        try
+                        {
+                            result.Data = JsonSerializer.Deserialize<T>(response);
+                        }
+                        catch
+                        {
+                            result.Error = true;
+                            result.ErrorText = "Response not deserializable to " + typeof(T).FullName;
+                            result.RawResponse = response;
+                        }
                     }
                     // Filling result in case of request failure
                     else
