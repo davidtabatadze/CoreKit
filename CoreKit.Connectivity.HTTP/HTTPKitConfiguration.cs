@@ -15,7 +15,7 @@ namespace CoreKit.Connectivity.HTTP
         public string ServiceURL { get; set; }
 
         /// <summary>
-        /// whether use web proxy or not
+        /// Whether to use web proxy or not
         /// </summary>
         public bool UseWebProxy { get; set; }
 
@@ -28,6 +28,11 @@ namespace CoreKit.Connectivity.HTTP
         /// Web proxy port
         /// </summary>
         public int WebProxyPort { get; set; }
+
+        /// <summary>
+        /// Whether to trust detected certificate or not
+        /// </summary>
+        public bool TrustCertificate { get; set; }
 
         /// <summary>
         /// Default headers of request

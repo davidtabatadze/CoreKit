@@ -65,8 +65,8 @@ namespace CoreKit.Connectivity.HTTP
             // Trying request
             try
             {
-                // Building web proxy
-                var proxy = new HttpClientHandler
+                // Building dandler
+                var handler = new HttpClientHandler
                 {
                     UseProxy = Configuration.UseWebProxy && Configuration.WebProxyURL.HasValue(),
                     Proxy = Configuration.WebProxyURL.HasValue() ? new WebProxy(
@@ -74,8 +74,17 @@ namespace CoreKit.Connectivity.HTTP
                         Configuration.WebProxyPort
                     ) : null
                 };
+                if (Configuration.TrustCertificate)
+                {
+                    handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                    handler.ServerCertificateCustomValidationCallback +=
+                        (sender, certificate, chain, errors) =>
+                        {
+                            return true;
+                        };
+                }
                 // Building http
-                using (var http = new HttpClient(proxy))
+                using (var http = new HttpClient(handler))
                 {
                     // Configuring http
                     http.BaseAddress = new Uri(Configuration.ServiceURL);
