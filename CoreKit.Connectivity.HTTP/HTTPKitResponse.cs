@@ -23,7 +23,7 @@ namespace CoreKit.Connectivity.HTTP
         /// <summary>
         /// Raw responce, in case if response is not convertable to T
         /// </summary>
-        public string RawResponse { get; set; }
+        public string RawData { get; set; }
 
         /// <summary>
         /// Proxy request result value

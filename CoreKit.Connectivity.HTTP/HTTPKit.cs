@@ -162,7 +162,13 @@ namespace CoreKit.Connectivity.HTTP
                         {
                             result.Error = true;
                             result.ErrorText = "Response not deserializable to " + typeof(T).FullName;
-                            result.RawResponse = response;
+                        }
+                        finally
+                        {
+                            if (result.Error || Configuration.IncludeRawResponse)
+                            {
+                                result.RawData = response;
+                            }
                         }
                     }
                     // Filling result in case of request failure

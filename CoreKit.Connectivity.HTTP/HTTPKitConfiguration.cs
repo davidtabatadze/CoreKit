@@ -35,6 +35,11 @@ namespace CoreKit.Connectivity.HTTP
         public bool TrustCertificate { get; set; }
 
         /// <summary>
+        /// If this is true, the raw response will allways be included. Otherwise only when Error occurs
+        /// </summary>
+        public bool IncludeRawResponse { get; set; }
+
+        /// <summary>
         /// Default headers of request
         /// </summary>
         public Dictionary<string, string> Headers { get; set; }
