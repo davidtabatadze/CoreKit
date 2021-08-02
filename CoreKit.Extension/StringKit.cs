@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Linq;
+using System.Text.Json;
 using System.Security.Cryptography;
 
 namespace CoreKit.Extension.String
@@ -111,6 +112,24 @@ namespace CoreKit.Extension.String
         {
             source = string.Join(" ", words.Select(w => w.TrimFull()));
             return source;
+        }
+
+        /// <summary>
+        /// Gets T object from Json string
+        /// </summary>
+        /// <typeparam name="T">Type of object</typeparam>
+        /// <param name="source">Source string</param>
+        /// <returns>T object</returns>
+        public static T FromJson<T>(this string source)
+        {
+            try
+            {
+                return JsonSerializer.Deserialize<T>(source);
+            }
+            catch
+            {
+                return default(T);
+            }
         }
 
         /// <summary>

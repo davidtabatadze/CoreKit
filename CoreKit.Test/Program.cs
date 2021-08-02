@@ -23,6 +23,8 @@ namespace CoreKit.Test
 
             public string Prop { get; set; }
 
+            public DateTime Prop2 { get; set; }
+
             public async Task DoSome()
             {
                 Console.WriteLine("doing some..");
@@ -101,6 +103,20 @@ namespace CoreKit.Test
         {
             try
             {
+
+                var j1 = "olaaa bolaaa".ToJson();
+                var j2 = new { x = 100, y = "ola" }.ToJson();
+                var j3 = new Test { Prop = "abaaa" }.ToJson();
+                var j4 = new List<Test> { new Test { Prop = "1" }, new Test { Prop = "1", Prop2 = DateTime.Now } }.ToJson();
+
+                var j5 = j1.FromJson<string>();
+                var j6 = j2.FromJson<object>();
+                var j7 = j3.FromJson<Test>();
+                var j8 = j4.FromJson<List<Test>>();
+
+                var j9 = "aowdjwoajdwoad".FromJson<Test>();
+
+
 
                 using (var http = new HTTPKit(new HTTPKitConfiguration
                 {

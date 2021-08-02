@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>3.0.4</Version>
+    <Version>3.0.5</Version>
     <Authors>David Tabatadze</Authors>
     <Description>.net standard extensions for reference and/or non reference types.</Description>
     <Copyright>Copyright (c) 2021 David Tabatadze</Copyright>

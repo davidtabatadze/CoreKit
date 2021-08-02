@@ -12,6 +12,16 @@ namespace CoreKit.Extension.Class
     {
 
         /// <summary>
+        /// Gets Json string of the specified object
+        /// </summary>
+        /// <param name="source">Source object</param>
+        /// <returns>Json string</returns>
+        public static string ToJson(this object source)
+        {
+            return JsonSerializer.Serialize(source);
+        }
+
+        /// <summary>
         /// Gets fresh copy of any object
         /// </summary>
         /// <typeparam name="T">Type of object</typeparam>

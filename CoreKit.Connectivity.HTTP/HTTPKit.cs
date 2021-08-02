@@ -8,7 +8,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CoreKit.Sync;
-using CoreKit.Extension.String;
 using Microsoft.Extensions.Options;
 
 namespace CoreKit.Connectivity.HTTP
@@ -52,6 +51,26 @@ namespace CoreKit.Connectivity.HTTP
         private HTTPKitConfiguration Configuration { get; set; }
 
         /// <summary>
+        /// Gets result indicating whether the string is empty
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Yes/No result</returns>
+        private bool IsEmpty(string source)
+        {
+            return source == null || string.IsNullOrEmpty(source) || string.IsNullOrWhiteSpace(source);
+        }
+
+        /// <summary>
+        /// Gets result indicating whether the string has any value
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>Yes/No result</returns>
+        private bool HasValue(string source)
+        {
+            return !IsEmpty(source);
+        }
+
+        /// <summary>
         /// Gets T type result of http request
         /// </summary>
         /// <typeparam name="T">Type of response</typeparam>
@@ -68,8 +87,8 @@ namespace CoreKit.Connectivity.HTTP
                 // Building dandler
                 var handler = new HttpClientHandler
                 {
-                    UseProxy = Configuration.UseWebProxy && Configuration.WebProxyURL.HasValue(),
-                    Proxy = Configuration.WebProxyURL.HasValue() ? new WebProxy(
+                    UseProxy = Configuration.UseWebProxy && HasValue(Configuration.WebProxyURL),
+                    Proxy = HasValue(Configuration.WebProxyURL) ? new WebProxy(
                         Configuration.WebProxyURL,
                         Configuration.WebProxyPort
                     ) : null
@@ -176,7 +195,7 @@ namespace CoreKit.Connectivity.HTTP
                     {
                         result.Error = true;
                         result.ErrorText = response; //JsonConvert.DeserializeObject<string>(response);
-                        if (result.ErrorText.IsEmpty())
+                        if (IsEmpty(result.ErrorText))
                         {
                             result.ErrorText = request.ReasonPhrase;
                         }
