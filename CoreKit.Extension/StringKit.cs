@@ -2,6 +2,8 @@
 using System.Text;
 using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Globalization;
 using System.Security.Cryptography;
 
 namespace CoreKit.Extension.String
@@ -130,6 +132,52 @@ namespace CoreKit.Extension.String
             {
                 return default(T);
             }
+        }
+
+        /// <summary>
+        /// Gets the result indicating whether the string represents the valid email or not
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>True/False</returns>
+        public static bool IsEmail(this string source)
+        {
+            // Final result
+            var result = false;
+            // Trying to analyse input
+            if (source.HasValue())
+            {
+                try
+                {
+                    // Normalize the domain
+                    source = Regex.Replace(
+                        source,
+                        @"(@)(.+)$",
+                        DomainMapper,
+                        RegexOptions.None,
+                        TimeSpan.FromMilliseconds(200)
+                    );
+                    // Examines the domain part of the email and normalizes it.
+                    string DomainMapper(Match match)
+                    {
+                        // Use IdnMapping class to convert Unicode domain names.
+                        var idn = new IdnMapping();
+                        // Pull out and process domain name (throws ArgumentException on invalid)
+                        string domainName = idn.GetAscii(match.Groups[2].Value);
+                        // Return the result
+                        return match.Groups[1].Value + domainName;
+                    }
+                    result = Regex.IsMatch(
+                        source,
+                        @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$",
+                        RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250)
+                    );
+                }
+                catch
+                {
+                }
+            }
+            // Returning the result
+            return result;
         }
 
         /// <summary>

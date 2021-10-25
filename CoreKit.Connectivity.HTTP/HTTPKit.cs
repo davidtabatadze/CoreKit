@@ -51,23 +51,74 @@ namespace CoreKit.Connectivity.HTTP
         private HTTPKitConfiguration Configuration { get; set; }
 
         /// <summary>
-        /// Gets result indicating whether the string is empty
+        /// object locker
         /// </summary>
-        /// <param name="source">Source string</param>
-        /// <returns>Yes/No result</returns>
-        private bool IsEmpty(string source)
-        {
-            return source == null || string.IsNullOrEmpty(source) || string.IsNullOrWhiteSpace(source);
-        }
+        private readonly object locker = new object();
 
         /// <summary>
-        /// Gets result indicating whether the string has any value
+        /// HTTP instance
         /// </summary>
-        /// <param name="source">Source string</param>
-        /// <returns>Yes/No result</returns>
-        private bool HasValue(string source)
+        private HttpClient Instance { get; set; }
+
+        /// <summary>
+        /// Singleton HTTP instance
+        /// </summary>
+        private HttpClient HTTP
         {
-            return !IsEmpty(source);
+            get
+            {
+                // In case the instance is not ready...
+                if (Instance == null)
+                {
+                    // Locking for thread safety
+                    lock (locker)
+                    {
+                        // Creating instance
+                        if (Instance == null)
+                        {
+                            // Building handler
+                            var handler = new HttpClientHandler
+                            {
+                                UseProxy = Configuration.UseWebProxy && (!string.IsNullOrWhiteSpace(Configuration.WebProxyURL)),
+                                Proxy = string.IsNullOrWhiteSpace(Configuration.WebProxyURL) ?
+                                        null :
+                                        new WebProxy(
+                                            Configuration.WebProxyURL,
+                                            Configuration.WebProxyPort
+                                        )
+                            };
+                            if (Configuration.TrustCertificate)
+                            {
+                                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                                handler.ServerCertificateCustomValidationCallback +=
+                                    (sender, certificate, chain, errors) =>
+                                    {
+                                        return true;
+                                    };
+                            }
+                            // Building http
+                            var http = new HttpClient(handler);
+                            // Configuring http
+                            http.BaseAddress = new Uri(Configuration.ServiceURL);
+                            //http.DefaultRequestHeaders.ConnectionClose = true;
+                            http.DefaultRequestHeaders.Accept.Clear();
+                            http.DefaultRequestHeaders.Accept.Add(
+                                new MediaTypeWithQualityHeaderValue("application/json")
+                            );
+                            // Applying configuration headers
+                            Configuration.Headers = Configuration.Headers ?? new Dictionary<string, string> { };
+                            foreach (var header in Configuration.Headers)
+                            {
+                                http.DefaultRequestHeaders.Add(header.Key, header.Value);
+                            }
+                            // Applying the instance
+                            Instance = http;
+                        }
+                    }
+                }
+                // Returning singleton
+                return Instance;
+            }
         }
 
         /// <summary>
@@ -77,132 +128,96 @@ namespace CoreKit.Connectivity.HTTP
         /// <param name="method">Request method <see cref="HTTPKitRequestMethod"/></param>
         /// <param name="url">Destination url</param>
         /// <param name="payload">Data parameters</param>
-        /// <param name="headers">Data headers</param>
         /// <returns>Request result of T Type</returns>
-        public async Task<HTTPKitResponse<T>> RequestAsync<T>(HTTPKitRequestMethod method, string url, object payload = null, Dictionary<string, string> headers = null)
+        public async Task<HTTPKitResponse<T>> RequestAsync<T>(HTTPKitRequestMethod method, string url, object payload = null)
         {
             // Trying request
             try
             {
-                // Building dandler
-                var handler = new HttpClientHandler
+                //// Fixing headers
+                //headers ??= new Dictionary<string, string> { };
+                //// Configuring headers
+                //foreach (var header in headers)
+                //{
+                //    http.DefaultRequestHeaders.Add(header.Key, header.Value);
+                //}
+
+                // Defining request
+                var request = new HttpResponseMessage();
+                // GET method
+                if (method == HTTPKitRequestMethod.GET)
                 {
-                    UseProxy = Configuration.UseWebProxy && HasValue(Configuration.WebProxyURL),
-                    Proxy = HasValue(Configuration.WebProxyURL) ? new WebProxy(
-                        Configuration.WebProxyURL,
-                        Configuration.WebProxyPort
-                    ) : null
-                };
-                if (Configuration.TrustCertificate)
-                {
-                    handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                    handler.ServerCertificateCustomValidationCallback +=
-                        (sender, certificate, chain, errors) =>
-                        {
-                            return true;
-                        };
+                    // Prepare params
+                    payload ??= "";
+                    // Do GET
+                    request = await HTTP.GetAsync(url + payload.ToString());
                 }
-                // Building http
-                using (var http = new HttpClient(handler))
+                // PUT method
+                if (method == HTTPKitRequestMethod.PUT)
                 {
-                    // Configuring http
-                    http.BaseAddress = new Uri(Configuration.ServiceURL);
-                    http.DefaultRequestHeaders.Accept.Clear();
-                    http.DefaultRequestHeaders.Accept.Add(
-                        new MediaTypeWithQualityHeaderValue("application/json")
-                    );
-                    // Fixing headers
-                    headers ??= new Dictionary<string, string> { };
-                    Configuration.Headers = Configuration.Headers ?? new Dictionary<string, string> { };
-                    // Configuring headers
-                    foreach (var header in headers)
-                    {
-                        http.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    }
-                    // Applying configuration headers
-                    foreach (var header in Configuration.Headers)
-                    {
-                        if (!headers.ContainsKey(header.Key))
-                        {
-                            http.DefaultRequestHeaders.Add(header.Key, header.Value);
-                        }
-                    }
-                    // Defining request
-                    var request = new HttpResponseMessage();
-                    // GET method
-                    if (method == HTTPKitRequestMethod.GET)
-                    {
-                        // Prepare params
-                        payload ??= "";
-                        // Do GET
-                        request = await http.GetAsync(url + payload.ToString());
-                    }
-                    // PUT method
-                    if (method == HTTPKitRequestMethod.PUT)
-                    {
-                        throw new NotImplementedException();
-                    }
-                    // POST method
-                    if (method == HTTPKitRequestMethod.POST)
-                    {
-                        // პარამეტრების მომზადება
-                        var content = new StringContent(
-                            JsonSerializer.Serialize(
-                                payload,
-                                typeof(object),
-                                new JsonSerializerOptions
-                                {
-                                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                                }
-                            ),
-                            Encoding.UTF8,
-                            "application/json"
-                        );
-                        // Do POST
-                        request = await http.PostAsync(url, content);
-                    }
-                    // DELETE method
-                    if (method == HTTPKitRequestMethod.DELETE)
-                    {
-                        throw new NotImplementedException();
-                    }
-                    // Defining response
-                    var response = await request.Content.ReadAsStringAsync();
-                    // Defining result
-                    var result = new HTTPKitResponse<T>();
-                    // Filling result in case of request success
-                    if (request.IsSuccessStatusCode)
-                    {
-                        try
-                        {
-                            result.Data = JsonSerializer.Deserialize<T>(response);
-                        }
-                        catch
-                        {
-                            result.Error = true;
-                            result.ErrorText = "Response not deserializable to " + typeof(T).FullName;
-                        }
-                        finally
-                        {
-                            if (result.Error || Configuration.IncludeRawResponse)
+                    throw new NotImplementedException();
+                }
+                // POST method
+                if (method == HTTPKitRequestMethod.POST)
+                {
+                    // პარამეტრების მომზადება
+                    var content = new StringContent(
+                        JsonSerializer.Serialize(
+                            payload,
+                            typeof(object),
+                            new JsonSerializerOptions
                             {
-                                result.RawData = response;
+                                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
                             }
-                        }
+                        ),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
+                    // Do POST
+                    request = await HTTP.PostAsync(url, content);
+                    //HTTP.SendAsync(new HttpRequestMessage() {  } )
+                }
+                // DELETE method
+                if (method == HTTPKitRequestMethod.DELETE)
+                {
+                    throw new NotImplementedException();
+                }
+                // Defining response
+                var response = await request.Content.ReadAsStringAsync();
+                // Defining result
+                var result = new HTTPKitResponse<T>();
+                // Filling result in case of request success
+                if (request.IsSuccessStatusCode)
+                {
+                    try
+                    {
+                        result.Data = JsonSerializer.Deserialize<T>(response);
                     }
-                    // Filling result in case of request failure
-                    else
+                    catch
                     {
                         result.Error = true;
-                        result.ErrorText = response; //JsonConvert.DeserializeObject<string>(response);
-                        if (IsEmpty(result.ErrorText))
+                        result.ErrorText = "Response not deserializable to " + typeof(T).FullName;
+                    }
+                    finally
+                    {
+                        if (result.Error || Configuration.IncludeRawResponse)
                         {
-                            result.ErrorText = request.ReasonPhrase;
+                            result.RawData = response;
                         }
                     }
-                    // Returning the result
-                    return result;
                 }
+                // Filling result in case of request failure
+                else
+                {
+                    result.Error = true;
+                    result.ErrorText = response;
+                    if (string.IsNullOrWhiteSpace(result.ErrorText))
+                    {
+                        result.ErrorText = request.ReasonPhrase;
+                    }
+                }
+                // Returning the result
+                return result;
             }
             // Catching any process exceptions
             catch (Exception exception)
@@ -223,12 +238,11 @@ namespace CoreKit.Connectivity.HTTP
         /// <param name="method">Request method <see cref="HTTPKitRequestMethod"/></param>
         /// <param name="url">Destination url</param>
         /// <param name="payload">Data parameters</param>
-        /// <param name="headers">Data headers</param>
         /// <returns>Request result of T Type</returns>
-        public HTTPKitResponse<T> Request<T>(HTTPKitRequestMethod method, string url, object payload = null, Dictionary<string, string> headers = null)
+        public HTTPKitResponse<T> Request<T>(HTTPKitRequestMethod method, string url, object payload = null)
         {
             // Do request
-            return SyncKit.Run(() => RequestAsync<T>(method, url, payload, headers));
+            return SyncKit.Run(() => RequestAsync<T>(method, url, payload));
         }
 
     }

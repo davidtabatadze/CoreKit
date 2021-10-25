@@ -12,12 +12,10 @@
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
     <RepositoryType>C#</RepositoryType>
     <PackageTags>.net standard netstandard tool kit toolkit http request david tabatadze optio optioai optio.ai</PackageTags>
-    <PackageReleaseNotes>Cache get.
-Cache put.
-Cache post.
-Cache delete.</PackageReleaseNotes>
+    <PackageReleaseNotes>HTTP Request
+HTTP Request Async</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
-    <Version>1.0.9</Version>
+    <Version>1.0.9.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

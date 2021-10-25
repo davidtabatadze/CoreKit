@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Text.Encodings.Web;
 
 namespace CoreKit.Extension.Class
 {
@@ -12,13 +13,35 @@ namespace CoreKit.Extension.Class
     {
 
         /// <summary>
+        /// Json options
+        /// </summary>
+        private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            //DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+        };
+
+        /// <summary>
         /// Gets Json string of the specified object
         /// </summary>
         /// <param name="source">Source object</param>
         /// <returns>Json string</returns>
         public static string ToJson(this object source)
         {
-            return JsonSerializer.Serialize(source);
+            return JsonSerializer.Serialize(source, JsonOptions);
+        }
+
+        /// <summary>
+        ///  Gets typed T object from json string
+        /// </summary>
+        /// <typeparam name="T">Type of object</typeparam>
+        /// <param name="source">Source object</param>
+        /// <param name="json">Json string</param>
+        /// <returns>T object</returns>
+        public static T FromJson<T>(this T source, string json)
+        {
+            return JsonSerializer.Deserialize<T>(json, JsonOptions);
         }
 
         /// <summary>
@@ -36,9 +59,9 @@ namespace CoreKit.Extension.Class
                 return source;
             }
             // Serialize object to json
-            var json = JsonSerializer.Serialize(source);
+            var json = JsonSerializer.Serialize(source, JsonOptions);
             // Deserialize as fresh copy
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json, JsonOptions);
         }
 
         /// <summary>
