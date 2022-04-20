@@ -40,6 +40,21 @@ namespace CoreKit.Connectivity.HTTP
         public bool IncludeRawResponse { get; set; }
 
         /// <summary>
+        /// Milliseconds to timeout the request
+        /// </summary>
+        public int TimeoutMilliseconds { get; set; }
+
+        /// <summary>
+        /// Whether to use upper camel case during deserialization
+        /// </summary>
+        public bool UsePascalNaming { get; set; }
+
+        /// <summary>
+        /// Only 200 response code will be considered as success
+        /// </summary>
+        public bool SuccessIs200Only { get; set; }
+
+        /// <summary>
         /// Default headers of request
         /// </summary>
         public Dictionary<string, string> Headers { get; set; }

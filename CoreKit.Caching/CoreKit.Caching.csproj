@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.2.2</Version>
+    <Version>2.2.3</Version>
     <Authors>David Tabatadze</Authors>
     <Description>.net standard cache manager based on MemoryCache</Description>
-    <Copyright>Copyright (c) 2020 David Tabatadze</Copyright>
+    <Copyright>Copyright (c) 2022 David Tabatadze</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
@@ -17,11 +17,20 @@ Cache get.
 Cache remove/clean.</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
     <PackageLicenseExpression></PackageLicenseExpression>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>obj\Debug\netstandard2.1\CoreKit.Caching.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
-    <PackageReference Include="System.Runtime.Caching" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

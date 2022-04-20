@@ -8,8 +8,15 @@ using CoreKit.Extension.Collection;
 using CoreKit.Extension.String;
 using CoreKit.Sync;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Threading;
 //using System.Text.Json;
 //using System.Text.Json.Serialization;
 
@@ -18,8 +25,21 @@ namespace CoreKit.Test
     class Program
     {
 
+        class post
+        {
+            public string Code { get; set; }
+            public string Merchant { get; set; }
+            public string Mr { get; set; }
+        }
+        class get
+        {
+            public string Mr { get; set; }
+        }
         class Test
         {
+
+            public string Version { get; set; }
+            public string Type { get; set; }
 
             public string Prop { get; set; }
 
@@ -47,6 +67,7 @@ namespace CoreKit.Test
             {
                 using (var http = new HTTPKit(new HTTPKitConfiguration
                 {
+                    UsePascalNaming = true,
                     ServiceURL = "http://localhost:5000/",
                     Headers = new Dictionary<string, string> {
                         { "client", "liberty" },
@@ -99,54 +120,407 @@ namespace CoreKit.Test
 
         }
 
-        static void Main(string[] args)
+        private class Response
         {
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public class ResponseData
+            {
+
+                /// <summary>
+                /// 
+                /// </summary>
+                [JsonPropertyName("messageId")]
+                public string MessageId { get; set; }
+
+                /// <summary>
+                /// 
+                /// </summary>
+                [JsonPropertyName("statusId")]
+                public int StatusId { get; set; }
+
+            }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            //[JsonPropertyName("data")]
+            public List<ResponseData> data { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            [JsonPropertyName("message")]
+            public string Message { get; set; }
+
+        }
+
+
+
+        private class SendResponse
+        {
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public string RequestID { get; set; }
+
+            /// <summary>
+            /// 
+            /// </summary>
+            public object ErrorResult { get; set; }
+
+        }
+
+        class CLSCLS
+        {
+            public string Version { get; set; }
+        }
+
+        private class SIM
+        {
+            public List<List<decimal>> Similarities { get; set; }
+        }
+
+        private static void olaa()
+        {
+            var similarities = new List<ulong> { };
+
             try
             {
 
-                var j1 = "olaaa bolaaa".ToJson();
-                var j2 = new { x = 100, y = "ola" }.ToJson();
-                var j3 = new Test { Prop = "abaaa" }.ToJson();
-                var j4 = new List<Test> { new Test { Prop = "1" }, new Test { Prop = "1", Prop2 = DateTime.Now } }.ToJson();
+                using (var client = new HTTPKit(new HTTPKitConfiguration
+                {
+                    UsePascalNaming = true,
+                    SuccessIs200Only = true,
+                    ServiceURL = "http://localhost:5000/",
+                    Headers = new Dictionary<string, string>
+                {
+                    { "key", "tera-t4c67c04a75dt8786f3f773e9393a9ee40e412442e5877e4e6e7b41a02a" }
+                }
 
-                var j5 = j1.FromJson<string>();
-                var j6 = j2.FromJson<object>();
-                var j7 = j3.FromJson<Test>();
-                var j8 = j4.FromJson<List<Test>>();
 
-                var j9 = "aowdjwoajdwoad".FromJson<Test>();
+                }))
+                {
+
+                    //var h = client.Request<List<Test>>(HTTPKitRequestMethod.GET, "api/v2/catalog/types/oook");
+                    //var m = client.Request<List<Test>>(HTTPKitRequestMethod.GET, "api/v2/catalog/types");
+
+                    var x = client.Request<List<Test>>(HTTPKitRequestMethod.GET, "api/v2/rule/extractions");
+                    //var y = client.Request<List<post>>(HTTPKitRequestMethod.POST, "api/v2/categorize",
+                    //  new List<post> { new post { Code = "dt", Merchant = "wissol" } });
+
+                    var dddddddd = 0;
+
+                    //var attampts = 2;
+                    //client.Timeout = TimeSpan.FromSeconds(2);
+                    //client.BaseAddress = new Uri("http://localhost:5000/agent/v2/rule/");
+
+                    //for (int i = 1; i <= attampts; i++)
+                    //{
+                    //    var request = client.GetAsync("extractions").Result;
+                    //    var response = request.Content.ReadAsStringAsync().Result;
+                    //    if (request.IsSuccessStatusCode)
+                    //    {
+                    //        var data = JsonSerializer.Deserialize<Test>(response);
+                    //        //similarities = data.Similarities.Select(s => Convert.ToUInt64(s[0])).ToList();
+                    //        break;
+                    //    }
+                    //}
+
+                }
+
+                //using (var client = new HttpClient())
+                //{
+
+                //    var attampts = 2;
+                //    client.Timeout = TimeSpan.FromSeconds(2);
+                //    //client.BaseAddress = new Uri("http://localhost:8080/similarproducts/");
+                //    client.BaseAddress = new Uri("http://172.30.111.201/similarproducts/");
+
+                //    for (int i = 1; i <= attampts; i++)
+                //    {
+                //        var request = client.GetAsync("123456", new CancellationTokenSource(TimeSpan.FromSeconds(1)).Token).Result;
+                //        var response = request.Content.ReadAsStringAsync().Result;
+                //        if (request.IsSuccessStatusCode)
+                //        {
+                //            var data = JsonSerializer.Deserialize<SIM>(response);
+                //            similarities = data.Similarities.Select(s => Convert.ToUInt64(s[0])).ToList();
+                //            break;
+                //        }
+                //    }
+
+                //}
+
+            }
+            catch (Exception exception)
+            {
+                var ee = 0;
+                //_logger.Error(ex.Message, ex);
+            }
+
+            if (similarities.Count > 0)
+            {
+                // do this shit
+            }
+        }
+
+        static async Task Main(string[] args)
+        {
+
+
+            olaa();
+            Console.WriteLine("ooooo");
+            Console.ReadKey();
+
+
+            try
+            {
+
+
+
+
+
+
+                var dtstr = new Test { Prop = "დატიკო" };
+                var tojs = dtstr.ToJson();
+                var frjs = new object { }.FromJson(tojs);
+
+
+                var em1 = "daiwdhaid.awd.daw".IsEmail();
+                var em2 = "david.tabatadze@ourfa.com".IsEmail();
+                var em3 = "david.tabatadze@outlook.COM".IsEmail();
+                var em4 = "david.tabatadze@optio.ai".IsEmail();
+
+
+                Console.WriteLine("=");
+                var ht = new HTTPKit(new HTTPKitConfiguration
+                {
+                    ServiceURL = "https://demo-sendgrid-webhook-insight-optio-ai-mdcnp7qf2a-ew.a.run.app/api/"
+                });
+                //// Configuring http
+                //ht.BaseAddress = new Uri("https://demo-sendgrid-webhook-insight-optio-ai-mdcnp7qf2a-ew.a.run.app/api/");
+                ////ht.DefaultRequestHeaders.ConnectionClose = true;
+                //ht.DefaultRequestHeaders.Accept.Clear();
+                //ht.DefaultRequestHeaders.Accept.Add(
+                //    new MediaTypeWithQualityHeaderValue("application/json")
+                //);
+                var dt = DateTime.Now;
+                for (int i = 0; i < 1000; i++)
+                {
+                    Console.WriteLine(i);
+                    await ht.RequestAsync<dynamic>(HTTPKitRequestMethod.POST, "SMS/json/Send", null);
+                }
+                Console.WriteLine((DateTime.Now - dt).TotalMilliseconds);
+                //for (int k = 0; k < 10; k++)
+                //{
+
+
+
+                //    var taskss = new List<Task> { };
+
+
+                //    Stopwatch stopwatch = new Stopwatch();
+                //    stopwatch.Start();
+
+
+                //    for (int x = 0; x < 5; x++)
+                //    {
+
+
+                //        taskss.Add(Task.Run(async () =>
+                //        {
+
+                //            var ht = new HttpClient();
+                //            // Configuring http
+                //            ht.BaseAddress = new Uri("http://localhost:7002/api/");
+                //            //ht.DefaultRequestHeaders.ConnectionClose = true;
+                //            ht.DefaultRequestHeaders.Accept.Clear();
+                //            ht.DefaultRequestHeaders.Accept.Add(
+                //                new MediaTypeWithQualityHeaderValue("application/json")
+                //            );
+                //            for (int i = 0; i < 1000; i++)
+                //            {
+                //                await ht.PostAsync("SMS/json/Send", null);
+                //            }
+                //        }));
+
+
+
+                //    }
+
+                //    await Task.WhenAll(taskss);
+
+                //    stopwatch.Stop();
+                //    Console.WriteLine(stopwatch.ElapsedMilliseconds);
+
+                //}
+                Console.ReadLine();
+                return;
+
+
+                //using (var http = new HTTPKit(new HTTPKitConfiguration
+                //{
+                //    ServiceURL = "http://localhost:7002/api/",
+                //    IncludeRawResponse = true
+                //}))
+                //{
+
+                //    var tasks = new List<Task> { };
+
+                //    var param = new
+                //    {
+                //        Message = new
+                //        {
+                //            PhoneNumber = "num",
+                //            Text = "tex",
+                //            ProductId = 7299, // test - 7299; prod - 7271
+                //            ChannelId = 1
+                //        }
+                //    };
+                //    for (int i = 0; i < 100; i++)
+                //    {
+                //        tasks.Add(Task.Run(async () =>
+                //        {
+                //            Console.WriteLine("connecting");
+                //            var response = await http.RequestAsync<SendResponse>(
+                //                HTTPKitRequestMethod.POST, "SMS/json/Send", param
+                //            );
+                //            if (response.Error == false)
+                //            {
+                //                Console.WriteLine("ook");
+                //            }
+                //            else
+                //            {
+                //                Console.WriteLine("err");
+                //            }
+                //        }));
+                //    }
+
+                //    var exec = Task.WhenAll(tasks);
+                //    try
+                //    {
+                //        await exec;
+                //    }
+                //    catch { }
+                //    if (exec.Status == TaskStatus.Faulted)
+                //    {
+                //        Console.WriteLine(exec.Exception.Message);
+                //    }
+
+                //}
+
+
+                Console.WriteLine("\n\n\n");
+
+
+                using (var http = new HTTPKit(new HTTPKitConfiguration
+                {
+                    ServiceURL = "https://api.discovery.optio.ai/",
+                    UseWebProxy = false,
+                    WebProxyURL = "---",
+                    IncludeRawResponse = true,
+                    Headers = new Dictionary<string, string>
+                {
+                    { "client", "liberty" },
+                    { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
+                }
+                }))
+                {
+                    var tasks = new List<Task> { };
+
+                    for (int i = 0; i < 100; i++)
+                    {
+                        Console.WriteLine("Connect");
+                        tasks.Add(Task.Run(async () =>
+                        {
+
+                            var res = await http.RequestAsync<Test>(
+                                HTTPKitRequestMethod.GET,
+                                "api/matrix/categories"
+                            );
+
+                            if (res.Error == false)
+                            {
+                                Console.WriteLine("ook =================");
+                            }
+                            else
+                            {
+                                Console.WriteLine(res.ErrorText);
+                            }
+
+                        }));
+                    }
+
+                    var exec = Task.WhenAll(tasks);
+                    try
+                    {
+                        await exec;
+                    }
+                    catch { }
+                    if (exec.Status == TaskStatus.Faulted)
+                    {
+                        Console.WriteLine(exec.Exception.Message);
+                    }
+                }
+
+
+
+                Console.WriteLine("Done");
+                Console.ReadKey();
+                return;
+
+
+
+
+
 
 
 
                 using (var http = new HTTPKit(new HTTPKitConfiguration
                 {
-                    ServiceURL = "http://localhost:7001/data/",
+                    ServiceURL = "https://api.discovery.optio.ai/",
                     UseWebProxy = false,
                     WebProxyURL = "---",
+                    IncludeRawResponse = true,
                     Headers = new Dictionary<string, string>
                 {
-                    { "client", "aaa" },
+                    { "client", "liberty" },
                     { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
                 }
                 }))
                 {
                     var res = http.Request<Test>(
-                        HTTPKitRequestMethod.POST,
-                        //"api/matrix/categories",
-                        "merchants/chart",
-                        new
-                        {
-                            DateFrom = DateTime.Now,
-                            Merchant = "dodolina",
-                            PageSkip = 666
-                        },
-                        //"/20200323.01",
-                        new Dictionary<string, string>
-                        {
-                        { "client", "liberty" }
-                        }
+                        HTTPKitRequestMethod.GET,
+                        "api/matrix/categories"
+                    //"merchants/chart",
+                    //new
+                    //{
+                    //    DateFrom = DateTime.Now,
+                    //    Merchant = "dodolina",
+                    //    PageSkip = 666
+                    //},
+                    //"/20200323.01",
+                    //new Dictionary<string, string>
+                    //{
+                    //{ "client", "liberty" }
+                    //}
                     );
                     var x = 0;
+                }
+                using (var http = new HTTPKit(new HTTPKitConfiguration { ServiceURL = "https://sender.ge/", IncludeRawResponse = true }))
+                {
+                    var url = string.Format(
+                        "api/send.php?apikey={0}&smsno=2&destination={1}&content={2}",
+                        "c37152d64f60ac6e563f67882583d7a3",
+                        "599438038",
+                        "aloooha"
+                    );
+                    var response = http.Request<Response>(HTTPKitRequestMethod.GET, url);
+
+                    var x = 10;
                 }
                 return;
 
@@ -274,7 +648,7 @@ namespace CoreKit.Test
                     WebProxyURL = "---",
                     Headers = new Dictionary<string, string>
                 {
-                    { "client", "aaa" },
+                    { "client", "liberty" },
                     { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
                 }
                 }))
@@ -282,11 +656,7 @@ namespace CoreKit.Test
                     var res = http.Request<dynamic>(
                         HTTPKitRequestMethod.GET,
                         "api/matrix/categories",
-                        "/20200323.01",
-                        new Dictionary<string, string>
-                        {
-                        { "client", "liberty" }
-                        }
+                        "/20200323.01"
                     );
                     var x = 0;
                 }

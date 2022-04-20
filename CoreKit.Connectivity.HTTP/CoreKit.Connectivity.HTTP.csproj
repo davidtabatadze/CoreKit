@@ -6,7 +6,7 @@
     <Authors>David Tabatadze</Authors>
     <Company>David Tabatadze</Company>
     <Description>.net standard http request manager based on HttpClient</Description>
-    <Copyright>Copyright (c) 2021 David Tabatadze</Copyright>
+    <Copyright>Copyright (c) 2022 David Tabatadze</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/davidtabatadze/CoreKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/davidtabatadze/CoreKit</RepositoryUrl>
@@ -15,12 +15,21 @@
     <PackageReleaseNotes>HTTP Request
 HTTP Request Async</PackageReleaseNotes>
     <NeutralLanguage>ka-GE</NeutralLanguage>
-    <Version>1.0.9.5</Version>
+    <Version>2.0.3</Version>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>obj\Release\netstandard2.1\CoreKit.Connectivity.HTTP.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
-    <PackageReference Include="System.Text.Json" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>

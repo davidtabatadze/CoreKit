@@ -2,9 +2,11 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Encodings.Web;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CoreKit.Sync;
@@ -42,8 +44,20 @@ namespace CoreKit.Connectivity.HTTP
         public HTTPKit(HTTPKitConfiguration configuration)
         {
             // ...
+            // Cancellation = new CancellationTokenSource(configuration.TimeoutMilliseconds).Token;
+            JsonOptions = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+                PropertyNamingPolicy = configuration.UsePascalNaming ? JsonNamingPolicy.CamelCase : null
+            };
             Configuration = configuration;
         }
+
+        /// <summary>
+        /// Json options
+        /// </summary>
+        private JsonSerializerOptions JsonOptions { get; set; }
 
         /// <summary>
         /// Configuration object
@@ -134,14 +148,6 @@ namespace CoreKit.Connectivity.HTTP
             // Trying request
             try
             {
-                //// Fixing headers
-                //headers ??= new Dictionary<string, string> { };
-                //// Configuring headers
-                //foreach (var header in headers)
-                //{
-                //    http.DefaultRequestHeaders.Add(header.Key, header.Value);
-                //}
-
                 // Defining request
                 var request = new HttpResponseMessage();
                 // GET method
@@ -160,22 +166,18 @@ namespace CoreKit.Connectivity.HTTP
                 // POST method
                 if (method == HTTPKitRequestMethod.POST)
                 {
-                    // პარამეტრების მომზადება
+                    // Defining content
                     var content = new StringContent(
                         JsonSerializer.Serialize(
                             payload,
                             typeof(object),
-                            new JsonSerializerOptions
-                            {
-                                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-                            }
+                            JsonOptions
                         ),
                         Encoding.UTF8,
                         "application/json"
                     );
                     // Do POST
                     request = await HTTP.PostAsync(url, content);
-                    //HTTP.SendAsync(new HttpRequestMessage() {  } )
                 }
                 // DELETE method
                 if (method == HTTPKitRequestMethod.DELETE)
@@ -185,13 +187,19 @@ namespace CoreKit.Connectivity.HTTP
                 // Defining response
                 var response = await request.Content.ReadAsStringAsync();
                 // Defining result
-                var result = new HTTPKitResponse<T>();
+                var result = new HTTPKitResponse<T>
+                {
+                    Code = (int)request.StatusCode
+                };
+                // Defining success
+                var success = request.IsSuccessStatusCode &&
+                              (Configuration.SuccessIs200Only == false || request.StatusCode == HttpStatusCode.OK);
                 // Filling result in case of request success
-                if (request.IsSuccessStatusCode)
+                if (success)
                 {
                     try
                     {
-                        result.Data = JsonSerializer.Deserialize<T>(response);
+                        result.Data = JsonSerializer.Deserialize<T>(response, JsonOptions);
                     }
                     catch
                     {

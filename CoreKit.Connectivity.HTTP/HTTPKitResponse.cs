@@ -11,6 +11,11 @@ namespace CoreKit.Connectivity.HTTP
     {
 
         /// <summary>
+        /// Status code
+        /// </summary>
+        public int Code { get; set; }
+
+        /// <summary>
         /// Whether proxy request succeeded or not
         /// </summary>
         public bool Error { get; set; }
