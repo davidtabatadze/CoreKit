@@ -263,157 +263,96 @@ namespace CoreKit.Test
 
             if (similarities.Count > 0)
             {
-                // do this shit
             }
+        }
+
+        private static async Task<string> GetCacheData()
+        {
+            return await Task.Run(() => { return "data"; });
         }
 
         static async Task Main(string[] args)
         {
-
-
-            olaa();
-            Console.WriteLine("ooooo");
-            Console.ReadKey();
-
-
             try
             {
 
+                Console.WriteLine("\n\n\n go");
+
+                //
+                var cache1 = new CacheKit(new CacheKitConfiguration { });
+                var cacheVal = string.Empty;
+
+                cache1.Set("cache", null);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("01 " + cacheVal.IsEmpty());
+
+                cache1.Set("cache", "d", null);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("02 " + cacheVal.IsEmpty());
+
+                cacheVal = await cache1.Get("cache", () => GetCacheData(), null);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("03 " + cacheVal.IsEmpty());
+
+                cache1.Set("cache", null, 1);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("04 " + cacheVal.IsEmpty());
+
+                cache1.Set("cache", "d", 1);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("05 " + cacheVal.HasValue());
+
+                cacheVal = await cache1.Get("cache", () => GetCacheData(), 1);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("06 " + cacheVal.HasValue());
+
+                Console.WriteLine("wait 30 sec");
+                Thread.Sleep(30 * 1001);
+                Console.WriteLine("07 " + cache1.Get<string>("cache").HasValue());
+
+                Console.WriteLine("wait 30 sec");
+                Thread.Sleep(30 * 1001);
+                Console.WriteLine("08 " + cache1.Get<string>("cache").IsEmpty());
+
+                cache1.Set("test0", "test0", 1);
+                cache1.Remove("test0");
+                Console.WriteLine("09 " + cache1.Get<string>("test0").IsEmpty());
+                cache1.Set("test1", "test1", 1);
+                cache1.Set("test2", "test2", 1);
+                cache1.Clear();
+                Console.WriteLine("10 " + cache1.Get<string>("test1").IsEmpty());
+                Console.WriteLine("11 " + cache1.Get<string>("test2").IsEmpty());
+
+                cache1.Set("cache", "d");
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("12 " + (cacheVal == "d"));
+
+                cache1.Set("cache", "datiko");
+                cacheVal = await cache1.Get("cache", () => GetCacheData());
+                Console.WriteLine("13 " + (cacheVal != "data"));
+
+                Console.WriteLine("wait 61 sec");
+                Thread.Sleep(61 * 1001);
+                cacheVal = cache1.Get<string>("cache");
+                Console.WriteLine("14 " + (cacheVal == "datiko"));
+
+                cache1 = new CacheKit(new CacheKitConfiguration { DefaultCachingMinutes = 1 });
+                cache1.Set("cache", "d");
+                Console.WriteLine("16 " + (cache1.Get<string>("cache") == "d"));
+
+                Console.WriteLine("wait 61 sec");
+                Thread.Sleep(61 * 1001);
+                Console.WriteLine("17 " + cache1.Get<string>("cache").IsEmpty());
+
+                Console.WriteLine("wait 61 sec");
+                cacheVal = await cache1.Get("cache", () => GetCacheData(), 0);
+                Thread.Sleep(61 * 1001);
+                Console.WriteLine("18 " + (cache1.Get<string>("cache") == "data"));
 
 
-
-
-
-                var dtstr = new Test { Prop = "დატიკო" };
-                var tojs = dtstr.ToJson();
-                var frjs = new object { }.FromJson(tojs);
-
-
-                var em1 = "daiwdhaid.awd.daw".IsEmail();
-                var em2 = "david.tabatadze@ourfa.com".IsEmail();
-                var em3 = "david.tabatadze@outlook.COM".IsEmail();
-                var em4 = "david.tabatadze@optio.ai".IsEmail();
-
-
-                Console.WriteLine("=");
-                var ht = new HTTPKit(new HTTPKitConfiguration
-                {
-                    ServiceURL = "https://demo-sendgrid-webhook-insight-optio-ai-mdcnp7qf2a-ew.a.run.app/api/"
-                });
-                //// Configuring http
-                //ht.BaseAddress = new Uri("https://demo-sendgrid-webhook-insight-optio-ai-mdcnp7qf2a-ew.a.run.app/api/");
-                ////ht.DefaultRequestHeaders.ConnectionClose = true;
-                //ht.DefaultRequestHeaders.Accept.Clear();
-                //ht.DefaultRequestHeaders.Accept.Add(
-                //    new MediaTypeWithQualityHeaderValue("application/json")
-                //);
-                var dt = DateTime.Now;
-                for (int i = 0; i < 1000; i++)
-                {
-                    Console.WriteLine(i);
-                    await ht.RequestAsync<dynamic>(HTTPKitRequestMethod.POST, "SMS/json/Send", null);
-                }
-                Console.WriteLine((DateTime.Now - dt).TotalMilliseconds);
-                //for (int k = 0; k < 10; k++)
-                //{
-
-
-
-                //    var taskss = new List<Task> { };
-
-
-                //    Stopwatch stopwatch = new Stopwatch();
-                //    stopwatch.Start();
-
-
-                //    for (int x = 0; x < 5; x++)
-                //    {
-
-
-                //        taskss.Add(Task.Run(async () =>
-                //        {
-
-                //            var ht = new HttpClient();
-                //            // Configuring http
-                //            ht.BaseAddress = new Uri("http://localhost:7002/api/");
-                //            //ht.DefaultRequestHeaders.ConnectionClose = true;
-                //            ht.DefaultRequestHeaders.Accept.Clear();
-                //            ht.DefaultRequestHeaders.Accept.Add(
-                //                new MediaTypeWithQualityHeaderValue("application/json")
-                //            );
-                //            for (int i = 0; i < 1000; i++)
-                //            {
-                //                await ht.PostAsync("SMS/json/Send", null);
-                //            }
-                //        }));
-
-
-
-                //    }
-
-                //    await Task.WhenAll(taskss);
-
-                //    stopwatch.Stop();
-                //    Console.WriteLine(stopwatch.ElapsedMilliseconds);
-
-                //}
-                Console.ReadLine();
-                return;
-
-
-                //using (var http = new HTTPKit(new HTTPKitConfiguration
-                //{
-                //    ServiceURL = "http://localhost:7002/api/",
-                //    IncludeRawResponse = true
-                //}))
-                //{
-
-                //    var tasks = new List<Task> { };
-
-                //    var param = new
-                //    {
-                //        Message = new
-                //        {
-                //            PhoneNumber = "num",
-                //            Text = "tex",
-                //            ProductId = 7299, // test - 7299; prod - 7271
-                //            ChannelId = 1
-                //        }
-                //    };
-                //    for (int i = 0; i < 100; i++)
-                //    {
-                //        tasks.Add(Task.Run(async () =>
-                //        {
-                //            Console.WriteLine("connecting");
-                //            var response = await http.RequestAsync<SendResponse>(
-                //                HTTPKitRequestMethod.POST, "SMS/json/Send", param
-                //            );
-                //            if (response.Error == false)
-                //            {
-                //                Console.WriteLine("ook");
-                //            }
-                //            else
-                //            {
-                //                Console.WriteLine("err");
-                //            }
-                //        }));
-                //    }
-
-                //    var exec = Task.WhenAll(tasks);
-                //    try
-                //    {
-                //        await exec;
-                //    }
-                //    catch { }
-                //    if (exec.Status == TaskStatus.Faulted)
-                //    {
-                //        Console.WriteLine(exec.Exception.Message);
-                //    }
-
-                //}
-
-
-                Console.WriteLine("\n\n\n");
+                Console.WriteLine("ok");
+                Console.ReadKey();
+                //
 
 
                 using (var http = new HTTPKit(new HTTPKitConfiguration

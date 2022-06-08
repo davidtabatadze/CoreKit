@@ -34,11 +34,6 @@ namespace CoreKit.Caching
         /// <param name="configuration">Configuration <see cref="CacheKitConfiguration"/></param>
         public CacheKit(CacheKitConfiguration configuration)
         {
-            // Setting default cacheing minutes
-            if (configuration.DefaultCachingMinutes <= 0)
-            {
-                configuration.DefaultCachingMinutes = 60;
-            }
             // ...
             Configuration = configuration;
         }
@@ -46,7 +41,7 @@ namespace CoreKit.Caching
         /// <summary>
         /// Configuration object
         /// </summary>
-        private CacheKitConfiguration Configuration { get; set; }
+        private readonly CacheKitConfiguration Configuration = null;
 
         /// <summary>
         /// Cache object
@@ -64,19 +59,29 @@ namespace CoreKit.Caching
         }
 
         /// <summary>
+        /// Adds the specified key and value to the cache. (DefaultCachingMinutes will be used)
+        /// </summary>
+        /// <param name="key">Key of the value to cache</param>
+        /// <param name="data">value of object to be cached</param>
+        public void Set(string key, object data)
+        {
+            Set(key, data, Configuration.DefaultCachingMinutes);
+        }
+
+        /// <summary>
         /// Adds the specified key and value to the cache
         /// </summary>
         /// <param name="key">Key of the value to cache</param>
         /// <param name="data">value of object to be cached</param>
         /// <param name="minutes">Minutes to maintain cached value</param>
         /// <remarks>
-        /// minutes null - means DefaultCachingMinutes will be used.
+        /// minutes null - means no cache will be used.
         /// minutes 0 - means cached value will be maintained while application running.
         /// </remarks>
-        public void Set(string key, object data, uint? minutes = null)
+        public void Set(string key, object data, uint? minutes)
         {
-            // In case the data is not present,
-            if (data == null)
+            // In case the data ot the minutes is not present,
+            if (data == null || minutes == null)
             {
                 // nothing will be cached
                 return;
@@ -92,7 +97,7 @@ namespace CoreKit.Caching
             else
             {
                 // Defining expiration
-                minutes = minutes ?? Configuration.DefaultCachingMinutes;
+                minutes ??= Configuration.DefaultCachingMinutes;
                 var expiration = DateTime.Now + TimeSpan.FromMinutes(minutes.Value);
                 policy.AbsoluteExpiration = expiration;
             }
@@ -114,6 +119,27 @@ namespace CoreKit.Caching
         }
 
         /// <summary>
+        /// Get a cached value. If it's not there, first load and cache it. (DefaultCachingMinutes will be used)
+        /// </summary>
+        /// <typeparam name="T">Type of the chached value</typeparam>
+        /// <param name="key">Key of the chached value</param>
+        /// <param name="acquire">Function to load value if it's not in the cache yet</param>
+        /// <returns>Cached value associated with the specified key</returns>
+        public async Task<T> Get<T>(string key, Func<Task<T>> acquire)
+        {
+            // If value is already cached at the specified key, return the value
+            if (IsSet(key))
+            {
+                return Get<T>(key);
+            }
+            // First execute the function to get the value
+            var result = await acquire();
+            // Function value will be cached and returned
+            Set(key, result);
+            return result;
+        }
+
+        /// <summary>
         /// Get a cached value. If it's not there, first load and cache it
         /// </summary>
         /// <typeparam name="T">Type of the chached value</typeparam>
@@ -125,7 +151,7 @@ namespace CoreKit.Caching
         /// minutes null - means DefaultCachingMinutes will be used.
         /// minutes 0 - means cached value will be maintained while application running.
         /// </remarks>
-        public async Task<T> Get<T>(string key, Func<Task<T>> acquire, uint? minutes = null)
+        public async Task<T> Get<T>(string key, Func<Task<T>> acquire, uint? minutes)
         {
             // If value is already cached at the specified key, return the value
             if (IsSet(key))

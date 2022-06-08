@@ -6,7 +6,6 @@ using System.Text.Encodings.Web;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CoreKit.Sync;
@@ -57,12 +56,12 @@ namespace CoreKit.Connectivity.HTTP
         /// <summary>
         /// Json options
         /// </summary>
-        private JsonSerializerOptions JsonOptions { get; set; }
+        private readonly JsonSerializerOptions JsonOptions = null;
 
         /// <summary>
         /// Configuration object
         /// </summary>
-        private HTTPKitConfiguration Configuration { get; set; }
+        private readonly HTTPKitConfiguration Configuration = null;
 
         /// <summary>
         /// object locker
