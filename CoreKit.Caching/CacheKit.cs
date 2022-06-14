@@ -23,6 +23,15 @@ namespace CoreKit.Caching
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <remarks>Cached value will be maintained while application running</remarks>
+        public CacheKit() : this(new CacheKitConfiguration { })
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         /// <param name="configuration">Configuration <see cref="CacheKitConfiguration"/></param>
         public CacheKit(IOptions<CacheKitConfiguration> configuration) : this(configuration.Value)
         {
@@ -127,16 +136,8 @@ namespace CoreKit.Caching
         /// <returns>Cached value associated with the specified key</returns>
         public async Task<T> Get<T>(string key, Func<Task<T>> acquire)
         {
-            // If value is already cached at the specified key, return the value
-            if (IsSet(key))
-            {
-                return Get<T>(key);
-            }
-            // First execute the function to get the value
-            var result = await acquire();
-            // Function value will be cached and returned
-            Set(key, result);
-            return result;
+            // Get a cached value
+            return await Get(key, acquire, Configuration.DefaultCachingMinutes);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace CoreKit.Caching
         /// <param name="minutes">Minutes to maintain cached value</param>
         /// <returns>Cached value associated with the specified key</returns>
         /// <remarks>
-        /// minutes null - means DefaultCachingMinutes will be used.
+        /// minutes null - means no cache will be used.
         /// minutes 0 - means cached value will be maintained while application running.
         /// </remarks>
         public async Task<T> Get<T>(string key, Func<Task<T>> acquire, uint? minutes)
@@ -160,6 +161,45 @@ namespace CoreKit.Caching
             }
             // First execute the function to get the value
             var result = await acquire();
+            // Function value will be cached and returned
+            Set(key, result, minutes);
+            return result;
+        }
+
+        /// <summary>
+        /// Get a cached value. If it's not there, first load and cache it. (DefaultCachingMinutes will be used)
+        /// </summary>
+        /// <typeparam name="T">Type of the chached value</typeparam>
+        /// <param name="key">Key of the chached value</param>
+        /// <param name="acquire">Function to load value if it's not in the cache yet</param>
+        /// <returns>Cached value associated with the specified key</returns>
+        public T Get<T>(string key, Func<T> acquire)
+        {
+            // Get a cached value
+            return Get(key, acquire, Configuration.DefaultCachingMinutes);
+        }
+
+        /// <summary>
+        /// Get a cached value. If it's not there, first load and cache it
+        /// </summary>
+        /// <typeparam name="T">Type of the chached value</typeparam>
+        /// <param name="key">Key of the chached value</param>
+        /// <param name="acquire">Function to load value if it's not in the cache yet</param>
+        /// <param name="minutes">Minutes to maintain cached value</param>
+        /// <returns>Cached value associated with the specified key</returns>
+        /// <remarks>
+        /// minutes null - means no cache will be used.
+        /// minutes 0 - means cached value will be maintained while application running.
+        /// </remarks>
+        public T Get<T>(string key, Func<T> acquire, uint? minutes)
+        {
+            // If value is already cached at the specified key, return the value
+            if (IsSet(key))
+            {
+                return Get<T>(key);
+            }
+            // First execute the function to get the value
+            var result = acquire();
             // Function value will be cached and returned
             Set(key, result, minutes);
             return result;

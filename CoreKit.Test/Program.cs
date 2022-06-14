@@ -270,6 +270,10 @@ namespace CoreKit.Test
         {
             return await Task.Run(() => { return "data"; });
         }
+        private static string GetCacheDataSync()
+        {
+            return "data";
+        }
 
         static async Task Main(string[] args)
         {
@@ -279,8 +283,11 @@ namespace CoreKit.Test
                 Console.WriteLine("\n\n\n go");
 
                 //
+                var cache0 = new CacheKit();
                 var cache1 = new CacheKit(new CacheKitConfiguration { });
                 var cacheVal = string.Empty;
+
+                var vvv = cache1.Get("xxx", () => GetCacheDataSync(), null);
 
                 cache1.Set("cache", null);
                 cacheVal = cache1.Get<string>("cache");

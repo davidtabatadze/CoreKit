@@ -11,6 +11,7 @@ namespace CoreKit.Caching
 
         /// <summary>
         /// Default minutes for data to be cached.
+        /// 0 means cached value will be maintained while application running.
         /// </summary>
         public uint DefaultCachingMinutes { get; set; }
 
