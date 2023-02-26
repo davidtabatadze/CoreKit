@@ -17,7 +17,7 @@ namespace CoreKit.Connectivity.HTTP
     /// <summary>
     /// Represents a manager for HttpClient
     /// </summary>
-    public class HTTPKit : IDisposable
+    public class HTTPKit : IHTTPKit, IDisposable
     {
 
         /// <summary>
@@ -149,6 +149,16 @@ namespace CoreKit.Connectivity.HTTP
             {
                 // Defining request
                 var request = new HttpResponseMessage();
+                // Defining content
+                var content = payload == null ? null : new StringContent(
+                    JsonSerializer.Serialize(
+                        payload,
+                        typeof(object),
+                        JsonOptions
+                    ),
+                    Encoding.UTF8,
+                    "application/json"
+                );
                 // GET method
                 if (method == HTTPKitRequestMethod.GET)
                 {
@@ -165,23 +175,17 @@ namespace CoreKit.Connectivity.HTTP
                 // POST method
                 if (method == HTTPKitRequestMethod.POST)
                 {
-                    // Defining content
-                    var content = new StringContent(
-                        JsonSerializer.Serialize(
-                            payload,
-                            typeof(object),
-                            JsonOptions
-                        ),
-                        Encoding.UTF8,
-                        "application/json"
-                    );
-                    // Do POST
                     request = await HTTP.PostAsync(url, content);
                 }
                 // DELETE method
                 if (method == HTTPKitRequestMethod.DELETE)
                 {
-                    throw new NotImplementedException();
+                    request = await HTTP.SendAsync(new HttpRequestMessage
+                    {
+                        Content = content,
+                        Method = HttpMethod.Delete,
+                        RequestUri = new Uri(Configuration.ServiceURL + url)
+                    });
                 }
                 // Defining response
                 var response = await request.Content.ReadAsStringAsync();

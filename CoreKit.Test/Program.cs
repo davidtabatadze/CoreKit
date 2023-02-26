@@ -275,141 +275,119 @@ namespace CoreKit.Test
             return "data";
         }
 
+
+        //private async Task TestCacheKit()
+        //{
+
+        //    //
+        //    Console.WriteLine("=== Testing CacheKit === \n");
+
+        //    var cache0 = new CacheKit();
+        //    var cache1 = new CacheKit(new CacheKitConfiguration { });
+        //    var cacheVal = string.Empty;
+
+        //    var vvv = cache1.Get("xxx", () => GetCacheDataSync(), null);
+
+        //    cache1.Set("cache", null);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("01 " + cacheVal.IsEmpty());
+
+        //    cache1.Set("cache", "d", null);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("02 " + cacheVal.IsEmpty());
+
+        //    cacheVal = await cache1.Get("cache", () => GetCacheData(), null);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("03 " + cacheVal.IsEmpty());
+
+        //    cache1.Set("cache", null, 1);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("04 " + cacheVal.IsEmpty());
+
+        //    cache1.Set("cache", "d", 1);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("05 " + cacheVal.HasValue());
+
+        //    cacheVal = await cache1.Get("cache", () => GetCacheData(), 1);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("06 " + cacheVal.HasValue());
+
+        //    Console.WriteLine("wait 30 sec");
+        //    Thread.Sleep(30 * 1001);
+        //    Console.WriteLine("07 " + cache1.Get<string>("cache").HasValue());
+
+        //    Console.WriteLine("wait 30 sec");
+        //    Thread.Sleep(30 * 1001);
+        //    Console.WriteLine("08 " + cache1.Get<string>("cache").IsEmpty());
+
+        //    cache1.Set("test0", "test0", 1);
+        //    cache1.Remove("test0");
+        //    Console.WriteLine("09 " + cache1.Get<string>("test0").IsEmpty());
+        //    cache1.Set("test1", "test1", 1);
+        //    cache1.Set("test2", "test2", 1);
+        //    cache1.Clear();
+        //    Console.WriteLine("10 " + cache1.Get<string>("test1").IsEmpty());
+        //    Console.WriteLine("11 " + cache1.Get<string>("test2").IsEmpty());
+
+        //    cache1.Set("cache", "d");
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("12 " + (cacheVal == "d"));
+
+        //    cache1.Set("cache", "datiko");
+        //    cacheVal = await cache1.Get("cache", () => GetCacheData());
+        //    Console.WriteLine("13 " + (cacheVal != "data"));
+
+        //    Console.WriteLine("wait 61 sec");
+        //    Thread.Sleep(61 * 1001);
+        //    cacheVal = cache1.Get<string>("cache");
+        //    Console.WriteLine("14 " + (cacheVal == "datiko"));
+
+        //    cache1 = new CacheKit(new CacheKitConfiguration { DefaultCachingMinutes = 1 });
+        //    cache1.Set("cache", "d");
+        //    Console.WriteLine("16 " + (cache1.Get<string>("cache") == "d"));
+
+        //    Console.WriteLine("wait 61 sec");
+        //    Thread.Sleep(61 * 1001);
+        //    Console.WriteLine("17 " + cache1.Get<string>("cache").IsEmpty());
+
+        //    Console.WriteLine("wait 61 sec");
+        //    cacheVal = await cache1.Get("cache", () => GetCacheData(), 0);
+        //    Thread.Sleep(61 * 1001);
+        //    Console.WriteLine("18 " + (cache1.Get<string>("cache") == "data"));
+
+        //    Console.WriteLine("=== CacheKit Done === \n");
+        //}
+
         static async Task Main(string[] args)
         {
             try
             {
 
-                Console.WriteLine("\n\n\n go");
-
-                //
-                var cache0 = new CacheKit();
-                var cache1 = new CacheKit(new CacheKitConfiguration { });
-                var cacheVal = string.Empty;
-
-                var vvv = cache1.Get("xxx", () => GetCacheDataSync(), null);
-
-                cache1.Set("cache", null);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("01 " + cacheVal.IsEmpty());
-
-                cache1.Set("cache", "d", null);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("02 " + cacheVal.IsEmpty());
-
-                cacheVal = await cache1.Get("cache", () => GetCacheData(), null);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("03 " + cacheVal.IsEmpty());
-
-                cache1.Set("cache", null, 1);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("04 " + cacheVal.IsEmpty());
-
-                cache1.Set("cache", "d", 1);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("05 " + cacheVal.HasValue());
-
-                cacheVal = await cache1.Get("cache", () => GetCacheData(), 1);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("06 " + cacheVal.HasValue());
-
-                Console.WriteLine("wait 30 sec");
-                Thread.Sleep(30 * 1001);
-                Console.WriteLine("07 " + cache1.Get<string>("cache").HasValue());
-
-                Console.WriteLine("wait 30 sec");
-                Thread.Sleep(30 * 1001);
-                Console.WriteLine("08 " + cache1.Get<string>("cache").IsEmpty());
-
-                cache1.Set("test0", "test0", 1);
-                cache1.Remove("test0");
-                Console.WriteLine("09 " + cache1.Get<string>("test0").IsEmpty());
-                cache1.Set("test1", "test1", 1);
-                cache1.Set("test2", "test2", 1);
-                cache1.Clear();
-                Console.WriteLine("10 " + cache1.Get<string>("test1").IsEmpty());
-                Console.WriteLine("11 " + cache1.Get<string>("test2").IsEmpty());
-
-                cache1.Set("cache", "d");
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("12 " + (cacheVal == "d"));
-
-                cache1.Set("cache", "datiko");
-                cacheVal = await cache1.Get("cache", () => GetCacheData());
-                Console.WriteLine("13 " + (cacheVal != "data"));
-
-                Console.WriteLine("wait 61 sec");
-                Thread.Sleep(61 * 1001);
-                cacheVal = cache1.Get<string>("cache");
-                Console.WriteLine("14 " + (cacheVal == "datiko"));
-
-                cache1 = new CacheKit(new CacheKitConfiguration { DefaultCachingMinutes = 1 });
-                cache1.Set("cache", "d");
-                Console.WriteLine("16 " + (cache1.Get<string>("cache") == "d"));
-
-                Console.WriteLine("wait 61 sec");
-                Thread.Sleep(61 * 1001);
-                Console.WriteLine("17 " + cache1.Get<string>("cache").IsEmpty());
-
-                Console.WriteLine("wait 61 sec");
-                cacheVal = await cache1.Get("cache", () => GetCacheData(), 0);
-                Thread.Sleep(61 * 1001);
-                Console.WriteLine("18 " + (cache1.Get<string>("cache") == "data"));
-
-
-                Console.WriteLine("ok");
+                new TestCoreKitCaching().Test();
                 Console.ReadKey();
-                //
+
+
+                Console.WriteLine("\n\n\n go");
 
 
                 using (var http = new HTTPKit(new HTTPKitConfiguration
                 {
-                    ServiceURL = "https://api.discovery.optio.ai/",
-                    UseWebProxy = false,
-                    WebProxyURL = "---",
-                    IncludeRawResponse = true,
+                    ServiceURL = "http://localhost:5000/",
+                    UsePascalNaming = true,
+                    SuccessIs200Only = true,
                     Headers = new Dictionary<string, string>
                 {
-                    { "client", "liberty" },
-                    { "key", "liberty-l6f845dt890d22f5566ffbab23fb012ae79348f8ba572d952b685e31" }
+                    { "key", "tera-t4c67c04a75dt8786f3f773e9393a9ee40e412442e5877e4e6e7b41a02a" }
                 }
                 }))
                 {
-                    var tasks = new List<Task> { };
 
-                    for (int i = 0; i < 100; i++)
-                    {
-                        Console.WriteLine("Connect");
-                        tasks.Add(Task.Run(async () =>
-                        {
-
-                            var res = await http.RequestAsync<Test>(
-                                HTTPKitRequestMethod.GET,
-                                "api/matrix/categories"
-                            );
-
-                            if (res.Error == false)
-                            {
-                                Console.WriteLine("ook =================");
-                            }
-                            else
-                            {
-                                Console.WriteLine(res.ErrorText);
-                            }
-
-                        }));
-                    }
-
-                    var exec = Task.WhenAll(tasks);
-                    try
-                    {
-                        await exec;
-                    }
-                    catch { }
-                    if (exec.Status == TaskStatus.Faulted)
-                    {
-                        Console.WriteLine(exec.Exception.Message);
-                    }
+                    var res = await http.RequestAsync<object>(
+                        HTTPKitRequestMethod.DELETE,
+                        "api/v2/sources",
+                        new List<string> { "aaa", "bbb" }
+                    );
+                    var x = 100;
                 }
 
 
